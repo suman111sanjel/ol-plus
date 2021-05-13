@@ -18,7 +18,7 @@ BUILT_PACKAGE=build/ol
 #
 # URL for canonical repo.
 #
-REMOTE=https://github.com/openlayers/openlayers.git
+REMOTE=https://github.com/suman111sanjel/ol-plus.git
 
 #
 # Display usage and exit.
