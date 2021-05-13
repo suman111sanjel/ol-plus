@@ -1,6 +1,6 @@
 {
   "name": "ol-plus",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Interactive plugin to Openlayers",
   "main": "index.js",
   "scripts": {
