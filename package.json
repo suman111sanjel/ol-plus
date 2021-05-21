@@ -1,16 +1,19 @@
 {
   "name": "ol-plus",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Interactive plugin to Openlayers",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "doc": "jsdoc -c jsdoc.json",
     "build-package": "npm run transpile && node tasks/prepare-package",
-    "build-index": "npm run build-package && node tasks/generate-index",
+    "build-index": "npm run build-package && node tasks/generate-index && npm run copyCSS && npm run copyISO8601 && npm run copyFonts",
     "build-legacy": "shx rm -rf build && npm run build-index && webpack --config config/webpack-config-legacy-build.js",
     "transpile": "shx rm -rf build/ol && shx mkdir -p build/ol && shx cp -rf src/ol build/ol/src && tsc --project config/tsconfig-build.json",
-    "dev": "webpack serve --config example/webpack.dev.config.js --hot"
+    "dev": "webpack serve --config example/webpack.dev.config.js --hot",
+    "copyCSS": "find ./src/ol -name '*.css' -exec bash -c 'dir=\"$2$(sed \"s,^$3,,;s,/[^/]\\+$,,\" <<< \"$1\")\"; mkdir -p \"$dir\"; cp -v \"$1\" \"$dir\"' _ {} ./build/ol ./src/ol \\;",
+    "copyISO8601":"cp ./src/iso8601.js ./build/ol/iso8601.js",
+    "copyFonts": "cp -rf ./src/fonts ./build/ol"
   },
   "repository": {
     "type": "git",
