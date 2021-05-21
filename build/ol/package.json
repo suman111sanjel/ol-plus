@@ -1,0 +1,24 @@
+{
+  "name": "ol-plus",
+  "version": "1.0.5",
+  "description": "Interactive plugin to Openlayers",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suman111sanjel/ol-plus.git"
+  },
+  "keywords": [
+    "Openlayers",
+    "mapping",
+    "ol"
+  ],
+  "author": "suman sanjel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suman111sanjel/ol-plus/issues"
+  },
+  "homepage": "https://github.com/suman111sanjel/ol-plus#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.13.10"
+  }
+}
