@@ -3,7 +3,7 @@
  */
 // import ol_ext_inherits from '../util/ext'
 import LayerGroup from 'ol/layer/Group.js';
-import "../../iso8601";
+import "../iso8601";
 
 import "./threddsDataserver.css";
 import TileLayer from 'ol/layer/Tile';

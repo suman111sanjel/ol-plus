@@ -54,7 +54,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
  */
 // import ol_ext_inherits from '../util/ext'
 import LayerGroup from 'ol/layer/Group.js';
-import "../../iso8601";
+import "../iso8601";
 import "./threddsDataserver.css";
 import TileLayer from 'ol/layer/Tile';
 import TileWMS from 'ol/source/TileWMS';
