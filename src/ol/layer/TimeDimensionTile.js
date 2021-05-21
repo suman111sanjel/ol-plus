@@ -8,7 +8,8 @@ import "../iso8601";
 import "./threddsDataserver.css";
 import TileLayer from 'ol/layer/Tile';
 import TileWMS from 'ol/source/TileWMS';
-import "../PluggableMap";
+
+import PluggableMap from "ol/PluggableMap";
 
 /**
  * @classdesc
@@ -16,9 +17,9 @@ import "../PluggableMap";
  *
  * @api
  */
-class TimeDimensionTile extends LayerGroup{
+class TimeDimensionTile extends LayerGroup {
     /**
-     * 
+     *
      * @param {Object} params
      */
     constructor(params) {
@@ -35,7 +36,7 @@ class TimeDimensionTile extends LayerGroup{
         this.initilizationStatus = false;
         this.maskObjList = [];
     }
-    
+
     /**
      * Array of Layers
      * @returns {Array<Object>}
@@ -73,13 +74,15 @@ class TimeDimensionTile extends LayerGroup{
 
         this.createLayers();
         this.layerVisibilityInitiliazation();
+        this.addLayerPrototypeOfMap();
         this.initilizationStatus = true;
         return this.AllLayersList;
     };
+
     /**
      * this method is generally used GET Method
-     * @param {*} method 
-     * @param {*} url 
+     * @param {*} method
+     * @param {*} url
      * @returns {Object}
      */
     makeRequest(method, url) {
@@ -105,8 +108,9 @@ class TimeDimensionTile extends LayerGroup{
             xhr.send();
         });
     };
+
     /**
-     * 
+     *
      * @param {*} url Url to the file gif image
      * @param {*} fileName file name to save
      */
@@ -126,8 +130,9 @@ class TimeDimensionTile extends LayerGroup{
         }
         xhr.send();
     };
+
     /**
-     * 
+     *
      * @param {*} WMSURL WMS URL
      * @param {*} WMSURLArrayIndex index of list of WMS URL
      */
@@ -178,10 +183,11 @@ class TimeDimensionTile extends LayerGroup{
         index = 0
         // this.AllDateAndTimeList = AllDateAndTimeList;
     };
+
     /**
-     * 
-     * @param {*} WMSURL 
-     * @param {*} WMSURLArrayIndex 
+     *
+     * @param {*} WMSURL
+     * @param {*} WMSURLArrayIndex
      */
     async collectDateAndTimeThredd4(WMSURL, WMSURLArrayIndex) {
         let aa = WMSURL + '?service=WMS&version=1.3.0&request=GetCapabilities&LAYERS=' + this.param.source.params.LAYERS;
@@ -206,6 +212,7 @@ class TimeDimensionTile extends LayerGroup{
         }
         index = 0;
     };
+
     createLayers() {
         let index = 0
         let AllLayers = [];
@@ -252,8 +259,9 @@ class TimeDimensionTile extends LayerGroup{
         }
         index = 0
     };
+
     /**
-     * 
+     *
      */
     layerVisibilityInitiliazation() {
         if (this.isFunction(this.param.dateisoFormatForLevelFormatter)) {
@@ -279,8 +287,9 @@ class TimeDimensionTile extends LayerGroup{
             this.setVisible(false);
         }
     };
+
     /**
-     * 
+     *
      */
     legendUIInitilization() {
         this.timeLayerLedgendDiv = document.querySelector('div.time-layer-ledgend-div');
@@ -295,8 +304,9 @@ class TimeDimensionTile extends LayerGroup{
         this.imageContainer.append(imageNode);
         this.timeLayerLedgendDiv.append(this.imageContainer);
     };
+
     /**
-     * 
+     *
      */
     UIinitilization() {
         this.timeSliderDiv = document.querySelector('div.timeSliderDiv');
@@ -342,8 +352,9 @@ class TimeDimensionTile extends LayerGroup{
             // console.log(this.btnGroup.getBoundingClientRect());
         }
     };
+
     /**
-     * 
+     *
      * @returns {$ElementType}
      */
     completeUI() {
@@ -414,19 +425,20 @@ class TimeDimensionTile extends LayerGroup{
         this.btnGroup.append(this.aTime);
         this.btnGroup.append(this.sliderDiv);
         this.btnGroup.append(this.fpsDiv);
-        if(this.param.showAnimationButton===true){
-                    this.btnGroup.append(this.animationDownloadSpan);
+        if (this.param.showAnimationButton === true) {
+            this.btnGroup.append(this.animationDownloadSpan);
         }
         this.container.append(this.timeMapTitle);
         this.container.append(this.btnGroup);
         return this.container;
     };
+
     /**
-     * 
+     *
      */
     bindEvents() {
         /**
-         * 
+         *
          */
         this.sliderInput.addEventListener("input", () => {
             let id = this.AllDateAndTimeList[parseInt(this.sliderInput.value.toString())].layerid;
@@ -440,7 +452,7 @@ class TimeDimensionTile extends LayerGroup{
 
         }, true);
         /**
-         * 
+         *
          */
         this.sliderInput.addEventListener("change", () => {
             let id = this.AllDateAndTimeList[parseInt(this.sliderInput.value.toString())].layerid;
@@ -699,9 +711,10 @@ class TimeDimensionTile extends LayerGroup{
             }
         }, true);
     };
+
     /**
-     * 
-     * @param {*} event 
+     *
+     * @param {*} event
      */
     tileLoadStart(event) {
         this.loading = this.loading + 1;
@@ -710,9 +723,10 @@ class TimeDimensionTile extends LayerGroup{
             this.aTime.style.backgroundColor = "#ffefa4";
         }
     };
+
     /**
-     * 
-     * @param {*} event 
+     *
+     * @param {*} event
      */
     tileLoadEnd(event) {
         if (this.loading !== 0) {
@@ -725,10 +739,11 @@ class TimeDimensionTile extends LayerGroup{
             }
         }
     };
+
     /**
-     * 
-     * @param {*} type 
-     * @param {*} className 
+     *
+     * @param {*} type
+     * @param {*} className
      * @returns {$ElementType}
      */
     createElement(type, className) {
@@ -739,66 +754,73 @@ class TimeDimensionTile extends LayerGroup{
         }
         return element
     };
+
     /**
-     * 
-     * @param {*} ClassName 
+     *
+     * @param {*} ClassName
      * @returns {$ElementType}
      */
     createDiv(ClassName) {
         var div = this.createElement('div', ClassName);
         return div;
     };
+
     /**
-     * 
-     * @param {*} ClassName 
+     *
+     * @param {*} ClassName
      * @returns {$ElementType}
      */
     createSpan(ClassName) {
         var span = this.createElement('span', ClassName);
         return span;
     };
+
     /**
-     * 
-     * @param {*} ClassName 
+     *
+     * @param {*} ClassName
      * @returns {$ElementType}
      */
     createA(ClassName) {
         var a = this.createElement('a', ClassName);
         return a;
     };
+
     /**
-     * 
-     * @param {*} ClassName 
+     *
+     * @param {*} ClassName
      * @returns {$ElementType}
      */
     createI(ClassName) {
         var i = this.createElement('i', ClassName);
         return i;
     };
+
     /**
-     * 
-     * @param {*} ClassName 
+     *
+     * @param {*} ClassName
      * @returns {$ElementType}
      */
     createImg(ClassName) {
         var img = this.createElement('img', ClassName);
         return img;
     };
+
     /**
-     * 
-     * @param {*} ClassName 
+     *
+     * @param {*} ClassName
      * @returns {$ElementType}
      */
     createInput(ClassName) {
         var i = this.createElement('input', ClassName);
         return i;
     };
+
     /**
-     * 
-     * @param {*} ClassName 
-     * @param {*} min 
-     * @param {*} max 
-     * @param {*} value 
+     *
+     * @param {*} ClassName
+     * @param {*} min
+     * @param {*} max
+     * @param {*} value
      * @returns {$ElementType}
      */
     createInputRange(ClassName, min, max, value) {
@@ -810,9 +832,10 @@ class TimeDimensionTile extends LayerGroup{
         i.setAttribute("value", value);
         return i;
     };
+
     /**
-     * 
-     * @param {*} visibleorNot 
+     *
+     * @param {*} visibleorNot
      */
     setVisible(visibleorNot) {
         let currentLayer = this.AllLayersList.filter(x => x.getProperties().id === this.currentLayerId)[0];
@@ -873,9 +896,10 @@ class TimeDimensionTile extends LayerGroup{
             this.imageContainer.parentElement.style.display = 'block';
         }
     };
+
     /**
-     * 
-     * @param {*} indexValue 
+     *
+     * @param {*} indexValue
      */
     setZIndex(indexValue) {
         this.AllLayersList.forEach(function (layer) {
@@ -883,24 +907,27 @@ class TimeDimensionTile extends LayerGroup{
         });
         this.timeSliderDiv.insertBefore(this.container, this.timeSliderDiv.firstChild);
     };
+
     /**
-     * 
-     * @param {*} Coods 
+     *
+     * @param {*} Coods
      */
     setMask(Coods) {
         this.setMaskOrCrop(Coods, 'mask');
     };
+
     /**
-     * 
-     * @param {*} Coods 
+     *
+     * @param {*} Coods
      */
     setCrop(Coods) {
         this.setMaskOrCrop(Coods, 'crop');
     };
+
     /**
-     * 
-     * @param {*} Coods 
-     * @param {*} maskOrCrop 
+     *
+     * @param {*} Coods
+     * @param {*} maskOrCrop
      */
     setMaskOrCrop(Coods, maskOrCrop) {
         let properties = this.getProperties();
@@ -927,15 +954,16 @@ class TimeDimensionTile extends LayerGroup{
             }
         }
     };
+
     /**
-     * 
-     * @param {*} layer 
-     * @param {*} Coods 
-     * @param {*} ArrayIndex 
-     * @param {*} deleteOrNot 
-     * @param {*} maskOrCrop 
+     *
+     * @param {*} layer
+     * @param {*} Coods
+     * @param {*} ArrayIndex
+     * @param {*} deleteOrNot
+     * @param {*} maskOrCrop
      */
-    changeMask(layer, Coods, ArrayIndex, deleteOrNot, maskOrCrop){
+    changeMask(layer, Coods, ArrayIndex, deleteOrNot, maskOrCrop) {
         if (deleteOrNot) {
             layer.removeFilter(this.maskObjList[ArrayIndex]);
         }
@@ -955,24 +983,27 @@ class TimeDimensionTile extends LayerGroup{
         MOrC.set('active', true);
         this.maskObjList[ArrayIndex] = MOrC;
     };
+
     /**
-     * 
-     * @param {*} opac 
+     *
+     * @param {*} opac
      */
     setOpacity(opac) {
         this.opacity = opac;
         let currentLayer = this.AllLayersList.filter(x => x.getProperties().id === this.currentLayerId)[0];
         currentLayer.setOpacity(this.opacity);
     };
+
     /**
-     * 
+     *
      * @returns {Object}
      */
     getProperties() {
         return this.param;
     };
+
     /**
-     * 
+     *
      */
     computeImgSize() {
         var newImg = new Image();
@@ -982,38 +1013,55 @@ class TimeDimensionTile extends LayerGroup{
     };
 
     /**
-     * 
+     *
      * @returns {*}
      */
     getInitilizationStatus() {
         return this.initilizationStatus;
     };
+
     getAllDateAndTimeList() {
         return this.AllDateAndTimeList;
     };
+
     /**
-     * 
+     *
      * @returns {Object}
      */
     GetFirstLayer() {
         return this.AllLayersList[0];
     };
+
     /**
-     * 
+     *
      * @returns {Object}
      */
     getCurrentLayer() {
         let currentLayer = this.AllLayersList.filter(x => x.getProperties().visible === true)[0];
         return currentLayer;
     };
+
     /**
-     * 
-     * @param {*} o 
+     *
+     * @param {*} o
      * @returns {Boolean}
      */
     isFunction(o) {
         return Function.prototype.isPrototypeOf(o);
     };
+
+    /**
+     *
+     */
+    addLayerPrototypeOfMap() {
+        if (!PluggableMap.prototype.addThreddsLayer) {
+            PluggableMap.prototype.addThreddsLayer = function (LayerList) {
+                for (let l of LayerList) {
+                    this.addLayer(l);
+                }
+            };
+        }
+    }
 }
 
 
