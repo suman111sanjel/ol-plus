@@ -1,7 +1,3 @@
-/**
- * @module ol/layer/TimeDimensionTile
- */
-// import ol_ext_inherits from '../util/ext'
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -53,7 +49,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/**
+ * @module ol/layer/TimeDimensionTile
+ */
+// import ol_ext_inherits from '../util/ext'
 import LayerGroup from 'ol/layer/Group.js';
+import "../../iso8601";
+import "./threddsDataserver.css";
+import TileLayer from 'ol/layer/Tile';
+import TileWMS from 'ol/source/TileWMS';
+import "../PluggableMap";
 /**
  * @classdesc
  * This layer is used for the visualization of time series data
@@ -81,7 +86,6 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         _this.maskObjList = [];
         return _this;
     }
-    ;
     /**
      * Array of Layers
      * @returns {Array<Object>}
@@ -344,7 +348,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                     var stri = JSON.parse(JSON.stringify(currentParam));
                     legendPath = that.param.legendPath;
                     url = that.param.source.url;
-                    source = new ol.source.TileWMS({
+                    source = new TileWMS({
                         url: b.WMSURL,
                         hidpi: false,
                         params: stri
@@ -355,7 +359,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                     tilePara.visible = b.visibility;
                     tilePara.legendPath = legendPath;
                     tilePara.source = source;
-                    lyr = new ol.layer.Tile(tilePara);
+                    lyr = new TileLayer(tilePara);
                     return lyr;
                 };
                 index += 1;
@@ -430,18 +434,20 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         var olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
         if (!this.timeSliderDiv) {
             this.timeSliderDiv = this.createDiv('timeSliderDiv custom-thredd-Scroll');
-            this.timeSliderDiv.style.width = this.ParentDivWidth.toString() + "px";
+            // this.timeSliderDiv.style.width = this.ParentDivWidth.toString() + "px";
             if (this.param.alignTimeSlider === "left") {
                 this.timeSliderDiv.style.left = "10px";
+                this.timeSliderDiv.style.transform = "translateX(0%)";
             }
             else if (this.param.alignTimeSlider === "right") {
                 this.timeSliderDiv.style.right = "10px";
+                this.timeSliderDiv.style.transform = "translateX(0%)";
             }
             else if (this.param.alignTimeSlider === "center") {
-                this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
+                // this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
             }
             else {
-                this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
+                // this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
             }
             olOverlaycontainer.append(this.timeSliderDiv);
         }
@@ -451,12 +457,13 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         if (this.param.timeSliderSize === "small") {
             this.timeSliderDiv.style.backgroundColor = '#fff0';
             this.timeSliderDiv.style.height = '50px';
-            this.timeSliderDiv.style.width = "block";
+            // this.timeSliderDiv.style.width = "block";
             this.timeMapTitle.style.border = "solid #cccccc";
             this.timeMapTitle.style.borderWidth = "1px 1px 0px 1px";
             this.timeMapTitle.style.backgroundColor = "#fff";
             this.container.style.paddingBottom = '0px';
             this.container.style.paddingLeft = '0px';
+            this.container.style.paddingRight = '0px';
             // console.log(this.btnGroup.style.width);
             // console.log(getComputedStyle(this.btnGroup));
             // console.log(getComputedStyle(this.btnGroup)["width"]);
@@ -529,7 +536,9 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         this.btnGroup.append(this.aTime);
         this.btnGroup.append(this.sliderDiv);
         this.btnGroup.append(this.fpsDiv);
-        this.btnGroup.append(this.animationDownloadSpan);
+        if (this.param.showAnimationButton === true) {
+            this.btnGroup.append(this.animationDownloadSpan);
+        }
         this.container.append(this.timeMapTitle);
         this.container.append(this.btnGroup);
         return this.container;
@@ -983,7 +992,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
             this.container.parentElement.style.display = 'none';
         }
         else {
-            this.container.parentElement.style.display = 'block';
+            this.container.parentElement.style.display = 'flex';
         }
         //slider pannel
         var parentImageContainerElement = this.imageContainer.parentElement;
@@ -1163,26 +1172,5 @@ var TimeDimensionTile = /** @class */ (function (_super) {
     ;
     return TimeDimensionTile;
 }(LayerGroup));
-/**
- *
- * @param {*} LayerList
- */
-ol.PluggableMap.prototype.addThreddsLayer = function (LayerList) {
-    for (var _i = 0, LayerList_1 = LayerList; _i < LayerList_1.length; _i++) {
-        var l = LayerList_1[_i];
-        this.addLayer(l);
-    }
-};
-if (ol.Map.prototype.getLayer === undefined) {
-    ol.Map.prototype.getLayer = function (id) {
-        var layer;
-        this.getLayers().forEach(function (lyr) {
-            if (id == lyr.get('id')) {
-                layer = lyr;
-            }
-        });
-        return layer;
-    };
-}
 export default TimeDimensionTile;
 //# sourceMappingURL=TimeDimensionTile.js.map

@@ -1,6 +1,6 @@
 {
   "name": "ol-plus",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Interactive plugin to Openlayers",
   "main": "index.js",
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/suman111sanjel/ol-plus#readme",
   "dependencies": {
-    "@babel/runtime": "^7.13.10"
+    "@babel/runtime": "^7.14.0",
+    "regenerator-runtime": "^0.13.7"
   }
 }

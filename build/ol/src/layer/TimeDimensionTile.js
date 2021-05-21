@@ -2,8 +2,12 @@
  * @module ol/layer/TimeDimensionTile
  */
 // import ol_ext_inherits from '../util/ext'
-
 import LayerGroup from 'ol/layer/Group.js';
+import "../../iso8601";
+import "./threddsDataserver.css";
+import TileLayer from 'ol/layer/Tile';
+import TileWMS from 'ol/source/TileWMS';
+import "../PluggableMap";
 
 /**
  * @classdesc
@@ -29,7 +33,7 @@ class TimeDimensionTile extends LayerGroup{
         this.frameIntervalMS = 1000;
         this.initilizationStatus = false;
         this.maskObjList = [];
-    };
+    }
     
     /**
      * Array of Layers
@@ -43,7 +47,7 @@ class TimeDimensionTile extends LayerGroup{
         }
         if (this.param.ThreddsDataServerVersion == 5) {
             if (Array.isArray(this.param.source.url)) {
-                let index = 0
+                let index = 0;
                 for (let WMSURL of this.param.source.url) {
                     await this.collectDateAndTime(this.param.source.url[index], index);
                     index = index + 1;
@@ -54,7 +58,7 @@ class TimeDimensionTile extends LayerGroup{
 
         } else if (this.param.ThreddsDataServerVersion == 4) {
             if (Array.isArray(this.param.source.url)) {
-                let index = 0
+                let index = 0;
                 for (let WMSURL of this.param.source.url) {
                     await this.collectDateAndTimeThredd4(this.param.source.url[index], index);
                     index = index + 1;
@@ -222,7 +226,7 @@ class TimeDimensionTile extends LayerGroup{
                     let stri = JSON.parse(JSON.stringify(currentParam));
                     legendPath = that.param.legendPath;
                     url = that.param.source.url
-                    source = new ol.source.TileWMS({
+                    source = new TileWMS({
                         url: b.WMSURL,
                         hidpi: false,
                         params: stri
@@ -233,7 +237,7 @@ class TimeDimensionTile extends LayerGroup{
                     tilePara.visible = b.visibility;
                     tilePara.legendPath = legendPath;
                     tilePara.source = source;
-                    lyr = new ol.layer.Tile(tilePara);
+                    lyr = new TileLayer(tilePara);
                     return lyr;
                 };
                 index += 1;
@@ -298,16 +302,18 @@ class TimeDimensionTile extends LayerGroup{
         let olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
         if (!this.timeSliderDiv) {
             this.timeSliderDiv = this.createDiv('timeSliderDiv custom-thredd-Scroll');
-            this.timeSliderDiv.style.width = this.ParentDivWidth.toString() + "px";
+            // this.timeSliderDiv.style.width = this.ParentDivWidth.toString() + "px";
             if (this.param.alignTimeSlider === "left") {
                 this.timeSliderDiv.style.left = "10px";
+                this.timeSliderDiv.style.transform = "translateX(0%)";
             } else if (this.param.alignTimeSlider === "right") {
                 this.timeSliderDiv.style.right = "10px";
+                this.timeSliderDiv.style.transform = "translateX(0%)";
             } else if (this.param.alignTimeSlider === "center") {
 
-                this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
+                // this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
             } else {
-                this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
+                // this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
             }
             olOverlaycontainer.append(this.timeSliderDiv);
         }
@@ -317,7 +323,7 @@ class TimeDimensionTile extends LayerGroup{
         if (this.param.timeSliderSize === "small") {
             this.timeSliderDiv.style.backgroundColor = '#fff0';
             this.timeSliderDiv.style.height = '50px';
-            this.timeSliderDiv.style.width = "block";
+            // this.timeSliderDiv.style.width = "block";
 
             this.timeMapTitle.style.border = "solid #cccccc";
             this.timeMapTitle.style.borderWidth = "1px 1px 0px 1px";
@@ -325,6 +331,7 @@ class TimeDimensionTile extends LayerGroup{
 
             this.container.style.paddingBottom = '0px';
             this.container.style.paddingLeft = '0px';
+            this.container.style.paddingRight = '0px';
             // console.log(this.btnGroup.style.width);
             // console.log(getComputedStyle(this.btnGroup));
             // console.log(getComputedStyle(this.btnGroup)["width"]);
@@ -406,8 +413,9 @@ class TimeDimensionTile extends LayerGroup{
         this.btnGroup.append(this.aTime);
         this.btnGroup.append(this.sliderDiv);
         this.btnGroup.append(this.fpsDiv);
-        this.btnGroup.append(this.animationDownloadSpan);
-
+        if(this.param.showAnimationButton===true){
+                    this.btnGroup.append(this.animationDownloadSpan);
+        }
         this.container.append(this.timeMapTitle);
         this.container.append(this.btnGroup);
         return this.container;
@@ -846,7 +854,7 @@ class TimeDimensionTile extends LayerGroup{
         if (blockCount === 0) {
             this.container.parentElement.style.display = 'none';
         } else {
-            this.container.parentElement.style.display = 'block';
+            this.container.parentElement.style.display = 'flex';
         }
 
         //slider pannel
@@ -1007,28 +1015,6 @@ class TimeDimensionTile extends LayerGroup{
     };
 }
 
-/**
- * 
- * @param {*} LayerList 
- */
-ol.PluggableMap.prototype.addThreddsLayer = function (LayerList) {
-    for (let l of LayerList) {
-        this.addLayer(l);
-    }
-};
-
-
-if (ol.Map.prototype.getLayer === undefined) {
-    ol.Map.prototype.getLayer = function (id) {
-        var layer;
-        this.getLayers().forEach(function (lyr) {
-            if (id == lyr.get('id')) {
-                layer = lyr;
-            }
-        });
-        return layer;
-    };
-}
 
 export default TimeDimensionTile;
 
