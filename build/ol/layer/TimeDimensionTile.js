@@ -167,13 +167,18 @@ var TimeDimensionTile = /** @class */ (function (_super) {
      * @param {*} url
      * @returns {Object}
      */
-    TimeDimensionTile.prototype.makeRequest = function (method, url) {
+    TimeDimensionTile.prototype.makeRequest = function (method, url, returnInObject, dateL) {
         return new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
             xhr.open(method, url);
             xhr.onload = function () {
                 if (this.status >= 200 && this.status < 300) {
-                    resolve(xhr.response);
+                    if (returnInObject) {
+                        resolve({ response: xhr.response, dateL: dateL });
+                    }
+                    else {
+                        resolve(xhr.response);
+                    }
                 }
                 else {
                     reject({
@@ -221,14 +226,15 @@ var TimeDimensionTile = /** @class */ (function (_super) {
      */
     TimeDimensionTile.prototype.collectDateAndTime = function (WMSURL, WMSURLArrayIndex) {
         return __awaiter(this, void 0, void 0, function () {
-            var aa, result, responseData, datesWithData, DateList, Year, month, _i, _a, day, IntMonth, IntDay, combine, index, _b, DateList_1, dateL, url, resultTime, response, timesteps, _c, timesteps_1, singleTime, fullTimeList, detailDate;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
+            var aa, result, responseData, datesWithData, DateList, Year, month, _i, _a, day, IntMonth, IntDay, combine, index, promiseList, _b, DateList_1, dateL, url;
+            var _this = this;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
                         aa = WMSURL + '?request=GetMetadata&item=layerDetails&layerName=' + this.param.source.params.LAYERS;
                         return [4 /*yield*/, this.makeRequest("GET", aa)];
                     case 1:
-                        result = _d.sent();
+                        result = _c.sent();
                         responseData = JSON.parse(result);
                         datesWithData = responseData.datesWithData;
                         DateList = [];
@@ -250,36 +256,38 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                             }
                         }
                         index = 0;
-                        _b = 0, DateList_1 = DateList;
-                        _d.label = 2;
-                    case 2:
-                        if (!(_b < DateList_1.length)) return [3 /*break*/, 5];
-                        dateL = DateList_1[_b];
-                        url = WMSURL + '?request=GetMetadata&item=timesteps&layerName=' + this.param.source.params.LAYERS + '&day=' + dateL;
-                        return [4 /*yield*/, this.makeRequest("GET", url)];
-                    case 3:
-                        resultTime = _d.sent();
-                        response = JSON.parse(resultTime);
-                        timesteps = response['timesteps'];
-                        for (_c = 0, timesteps_1 = timesteps; _c < timesteps_1.length; _c++) {
-                            singleTime = timesteps_1[_c];
-                            fullTimeList = dateL + "T" + singleTime;
-                            detailDate = {
-                                dateisoFormat: fullTimeList,
-                                dateisoFormatForLevel: fullTimeList,
-                                localDateTime: Date.parseISO8601(fullTimeList).toLocaleString(),
-                                layerid: this.param.id + WMSURLArrayIndex + index.toString(),
-                                visibility: false,
-                                WMSURL: WMSURL
-                            };
-                            this.AllDateAndTimeList.push(detailDate);
-                            index += 1;
+                        promiseList = [];
+                        for (_b = 0, DateList_1 = DateList; _b < DateList_1.length; _b++) {
+                            dateL = DateList_1[_b];
+                            url = WMSURL + '?request=GetMetadata&item=timesteps&layerName=' + this.param.source.params.LAYERS + '&day=' + dateL;
+                            promiseList.push(this.makeRequest('GET', url, true, dateL));
                         }
-                        _d.label = 4;
-                    case 4:
-                        _b++;
-                        return [3 /*break*/, 2];
-                    case 5:
+                        return [4 /*yield*/, Promise.all(promiseList).then(function (results) {
+                                for (var _i = 0, results_1 = results; _i < results_1.length; _i++) {
+                                    var result_1 = results_1[_i];
+                                    console.log(result_1);
+                                    var response = JSON.parse(result_1.response);
+                                    var timesteps = response['timesteps'];
+                                    for (var _a = 0, timesteps_1 = timesteps; _a < timesteps_1.length; _a++) {
+                                        var singleTime = timesteps_1[_a];
+                                        var fullTimeList = result_1.dateL + "T" + singleTime;
+                                        var detailDate = {
+                                            dateisoFormat: fullTimeList,
+                                            dateisoFormatForLevel: fullTimeList,
+                                            localDateTime: Date.parseISO8601(fullTimeList).toLocaleString(),
+                                            layerid: _this.param.id + WMSURLArrayIndex + index.toString(),
+                                            visibility: false,
+                                            WMSURL: WMSURL
+                                        };
+                                        _this.AllDateAndTimeList.push(detailDate);
+                                        index += 1;
+                                    }
+                                }
+                            }).catch(function (error) {
+                                console.log(error);
+                            })];
+                    case 2:
+                        _c.sent();
                         index = 0;
                         return [2 /*return*/];
                 }
