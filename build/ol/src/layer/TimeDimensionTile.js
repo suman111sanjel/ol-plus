@@ -8,8 +8,8 @@ import "../iso8601";
 import "./threddsDataserver.css";
 import TileLayer from 'ol/layer/Tile';
 import TileWMS from 'ol/source/TileWMS';
+import '../PluggableMap';
 
-import PluggableMap from "ol/PluggableMap";
 
 /**
  * @classdesc
@@ -74,7 +74,7 @@ class TimeDimensionTile extends LayerGroup {
 
         this.createLayers();
         this.layerVisibilityInitiliazation();
-        this.addLayerPrototypeOfMap();
+        // this.addLayerPrototypeOfMap();
         this.initilizationStatus = true;
         return this.AllLayersList;
     };
@@ -1050,18 +1050,15 @@ class TimeDimensionTile extends LayerGroup {
         return Function.prototype.isPrototypeOf(o);
     };
 
-    /**
-     *
-     */
-    addLayerPrototypeOfMap() {
-        if (!PluggableMap.prototype.addThreddsLayer) {
-            PluggableMap.prototype.addThreddsLayer = function (LayerList) {
-                for (let l of LayerList) {
-                    this.addLayer(l);
-                }
-            };
-        }
-    }
+    // addLayerPrototypeOfMap() {
+    //     if (!PluggableMap.prototype.addThreddsLayer) {
+    //         PluggableMap.prototype.addThreddsLayer = function (LayerList) {
+    //             for (let l of LayerList) {
+    //                 this.addLayer(l);
+    //             }
+    //         };
+    //     }
+    // }
 }
 
 

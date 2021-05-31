@@ -85,13 +85,18 @@ class TimeDimensionTile extends LayerGroup {
      * @param {*} url
      * @returns {Object}
      */
-    makeRequest(method, url) {
+    makeRequest(method, url, returnInObject, dateL) {
         return new Promise(function (resolve, reject) {
             let xhr = new XMLHttpRequest();
             xhr.open(method, url);
             xhr.onload = function () {
                 if (this.status >= 200 && this.status < 300) {
-                    resolve(xhr.response);
+                    if (returnInObject) {
+                        resolve({response: xhr.response, dateL: dateL});
+
+                    } else {
+                        resolve(xhr.response);
+                    }
                 } else {
                     reject({
                         status: this.status,
@@ -160,26 +165,34 @@ class TimeDimensionTile extends LayerGroup {
                 }
             }
         }
-        let index = 0
+        let index = 0;
+        let promiseList = []
         for (let dateL of DateList) {
             let url = WMSURL + '?request=GetMetadata&item=timesteps&layerName=' + this.param.source.params.LAYERS + '&day=' + dateL;
-            let resultTime = await this.makeRequest("GET", url);
-            let response = JSON.parse(resultTime);
-            let timesteps = response['timesteps'];
-            for (let singleTime of timesteps) {
-                let fullTimeList = dateL + "T" + singleTime
-                let detailDate = {
-                    dateisoFormat: fullTimeList,
-                    dateisoFormatForLevel: fullTimeList,
-                    localDateTime: Date.parseISO8601(fullTimeList).toLocaleString(),
-                    layerid: this.param.id + WMSURLArrayIndex + index.toString(),
-                    visibility: false,
-                    WMSURL: WMSURL
-                }
-                this.AllDateAndTimeList.push(detailDate);
-                index += 1;
-            }
+            promiseList.push(this.makeRequest('GET', url, true, dateL));
         }
+        await Promise.all(promiseList).then((results) => {
+            for (let result of results) {
+                console.log(result);
+                let response = JSON.parse(result.response);
+                let timesteps = response['timesteps'];
+                for (let singleTime of timesteps) {
+                    let fullTimeList = result.dateL + "T" + singleTime;
+                    let detailDate = {
+                        dateisoFormat: fullTimeList,
+                        dateisoFormatForLevel: fullTimeList,
+                        localDateTime: Date.parseISO8601(fullTimeList).toLocaleString(),
+                        layerid: this.param.id + WMSURLArrayIndex + index.toString(),
+                        visibility: false,
+                        WMSURL: WMSURL
+                    }
+                    this.AllDateAndTimeList.push(detailDate);
+                    index += 1;
+                }
+            }
+        }).catch((error) => {
+            console.log(error)
+        });
         index = 0
         // this.AllDateAndTimeList = AllDateAndTimeList;
     };
@@ -1060,7 +1073,6 @@ class TimeDimensionTile extends LayerGroup {
     //     }
     // }
 }
-
 
 export default TimeDimensionTile;
 

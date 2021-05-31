@@ -58,7 +58,7 @@ import "../iso8601";
 import "./threddsDataserver.css";
 import TileLayer from 'ol/layer/Tile';
 import TileWMS from 'ol/source/TileWMS';
-import PluggableMap from "ol/PluggableMap";
+import '../PluggableMap';
 /**
  * @classdesc
  * This layer is used for the visualization of time series data
@@ -153,7 +153,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                     case 17:
                         this.createLayers();
                         this.layerVisibilityInitiliazation();
-                        this.addLayerPrototypeOfMap();
+                        // this.addLayerPrototypeOfMap();
                         this.initilizationStatus = true;
                         return [2 /*return*/, this.AllLayersList];
                 }
@@ -1171,19 +1171,6 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         return Function.prototype.isPrototypeOf(o);
     };
     ;
-    /**
-     *
-     */
-    TimeDimensionTile.prototype.addLayerPrototypeOfMap = function () {
-        if (!PluggableMap.prototype.addThreddsLayer) {
-            PluggableMap.prototype.addThreddsLayer = function (LayerList) {
-                for (var _i = 0, LayerList_1 = LayerList; _i < LayerList_1.length; _i++) {
-                    var l = LayerList_1[_i];
-                    this.addLayer(l);
-                }
-            };
-        }
-    };
     return TimeDimensionTile;
 }(LayerGroup));
 export default TimeDimensionTile;
