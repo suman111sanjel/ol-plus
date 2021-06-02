@@ -265,7 +265,6 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                         return [4 /*yield*/, Promise.all(promiseList).then(function (results) {
                                 for (var _i = 0, results_1 = results; _i < results_1.length; _i++) {
                                     var result_1 = results_1[_i];
-                                    console.log(result_1);
                                     var response = JSON.parse(result_1.response);
                                     var timesteps = response['timesteps'];
                                     for (var _a = 0, timesteps_1 = timesteps; _a < timesteps_1.length; _a++) {
@@ -310,7 +309,6 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.makeRequest("GET", aa)];
                     case 1:
                         result = _a.sent();
-                        console.log("result");
                         parser = new DOMParser();
                         xmlDoc = parser.parseFromString(result, "text/xml");
                         DimensionTag = xmlDoc.getElementsByTagName("Dimension")[0];

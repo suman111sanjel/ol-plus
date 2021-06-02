@@ -173,7 +173,6 @@ class TimeDimensionTile extends LayerGroup {
         }
         await Promise.all(promiseList).then((results) => {
             for (let result of results) {
-                console.log(result);
                 let response = JSON.parse(result.response);
                 let timesteps = response['timesteps'];
                 for (let singleTime of timesteps) {
@@ -205,7 +204,6 @@ class TimeDimensionTile extends LayerGroup {
     async collectDateAndTimeThredd4(WMSURL, WMSURLArrayIndex) {
         let aa = WMSURL + '?service=WMS&version=1.3.0&request=GetCapabilities&LAYERS=' + this.param.source.params.LAYERS;
         let result = await this.makeRequest("GET", aa);
-        console.log("result");
         let parser = new DOMParser();
         let xmlDoc = parser.parseFromString(result, "text/xml");
         let DimensionTag = xmlDoc.getElementsByTagName("Dimension")[0];
