@@ -511,7 +511,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         this.spanRepeatToggle.append(iRepeatToggle);
         // Date-Time
         this.aTime = this.createA('thredds-data-server-data-time timecontrol-date');
-        this.aTime.innerText = this.AllDateAndTimeList[0].dateisoFormat;
+        this.aTime.innerText = this.AllDateAndTimeList[0].dateisoFormatForLevel;
         this.aTime.style.backgroundColor = "#fff";
         this.aTime.setAttribute("href", "javascript:void(0)");
         this.aTime.setAttribute("title", "Date");

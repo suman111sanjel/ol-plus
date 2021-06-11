@@ -154,7 +154,7 @@ input[type=range].thredds-range:focus::-ms-fill-upper {
     position: absolute;
     z-index: 14;
     background: white;
-    pointer-events:auto;
+    pointer-events: auto;
     flex-direction: column;
     left: 50%;
     transform: translateX(-50%);
@@ -165,6 +165,8 @@ input[type=range].thredds-range:focus::-ms-fill-upper {
     padding-left: 20px;
     padding-right: 20px;
     display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .thredds-data-server-enable-repeat, .thredds-data-server-enable-repeat:hover {
@@ -224,6 +226,7 @@ input[type=range].thredds-range:focus::-ms-fill-upper {
 
 .time-map-title {
     text-align: center;
+    flex: 1;
 }
 
 
@@ -374,6 +377,9 @@ a.timecontrol-date.loading, a.timecontrol-date.loading:hover {
     font-family: "Glyphicons Halflings";
     display: block;
 }
+.timeSliderInnerDiv .btn-group{
+    flex: 1;
+}
 
 .timeSliderInnerDiv .btn-group, .timeSliderInnerDiv .btn-group-vertical {
     position: relative;
@@ -482,3 +488,8 @@ a.timecontrol-date.loading, a.timecontrol-date.loading:hover {
 
 
 /*Bootstrap end*/
+
+
+.thredds-data-server-control-rangecontrol .thredds-range{
+position: absolute;
+}
