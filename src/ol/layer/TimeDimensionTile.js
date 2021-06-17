@@ -317,11 +317,10 @@ class TimeDimensionTile extends LayerGroup {
         this.AllLayersList[0].setOpacity(this.opacity);
         this.UIinitilization();
         this.legendUIInitilization();
-        if (this.isFunction(this.param.customLegend)) {
+        if (this.param.customLegendElement) {
             // debugger;
             this.imageContainer.innerHTML = '';
-            let customElement = this.param.customLegend(this.param.customLegendData);
-            this.imageContainer.append(customElement);
+            this.imageContainer.append(this.param.customLegendElement);
         }
         if (visibile === true) {
             this.setVisible(true);
@@ -405,6 +404,7 @@ class TimeDimensionTile extends LayerGroup {
 
         this.timeMapTitle = this.createDiv('time-map-title');
         this.timeMapTitle.innerText = this.param.title;
+
         this.btnGroup = this.createDiv('btn-group');
 
         //step-backward
@@ -670,87 +670,76 @@ class TimeDimensionTile extends LayerGroup {
             }
         };
         this.animationDownloadSpan.addEventListener('click', async () => {
-            // let BaseUrl = this.param.source.url;
-            // let gifURL = BaseUrl + '?LAYERS=' + this.param.source.params.LAYERS + '&TIME=' + this.animationLayerListStr + '&TRANSPARENT=true&STYLES=boxfill%2Frainbow&COLORSCALERANGE=-50%2C50&NUMCOLORBANDS=20&LOGSCALE=false&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image/gif&SRS=EPSG%3A4326&BBOX=60,7.96875,110,47.03125&WIDTH=512&HEIGHT=400'
-            // let layer = this.getCurrentLayer();
-            // console.log(layer);
-            // var source = layer.getProperties().source;
-            // var params = {
-            //     REQUEST:'GetMap',
-            //     FORMAT: 'image/gif',
-            //     TIME: this.animationLayerListStr
-            // };
-            // var view = this.param.mapObj;
-            // var viewResolution = view.getResolution();
-            // var pointTest = [81, 27]
-            // var url = source.getFeatureInfoUrl(
-            //     pointTest, viewResolution, view.getProjection().code_,
-            //     params);
-            // console.log(url)
-            let CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
-            if (!CheckDisable) {
-                if (this.param.RGBComposite) {
-                    this.animationDownloadSpan.setAttribute('data-disabled', 1);
-                    let fps = 1 / parseInt(this.fpsInput.value)
-                    let gifshotParams = {
-                        images: [],
-                        gifWidth: 1000,
-                        gifHeight: 720,
-                        numFrames: this.AllDateAndTimeList.length,
-                        interval: fps,
-                        frameDuration: fps,
-                        fontWeight: 'normal',
-                        fontSize: '22px',
-                        fontFamily: 'sans-serif',
-                        fontColor: '#ffffff',
-                        textAlign: 'center',
-                        textBaseline: 'bottom',
-                        sampleInterval: 10,
-                        numWorkers: 2
-                    }
-                    let BaseUrl = this.param.source.url;
-                    this.AllDateAndTimeList.forEach((currentObj, index) => {
-                        let WMSTileUrl = BaseUrl[index] + '?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image/png&SRS=EPSG:4326&BBOX=60,15,110,40&WIDTH=1000&HEIGHT=720' + '&LAYERS=' + this.param.source.params.LAYERS + '&TRANSPARENT=true&SLD_BODY=' + encodeURIComponent(this.param.source.params.SLD_BODY).toString() + '&TIME='
-                        let imgObj = {src: WMSTileUrl + currentObj.dateisoFormat, text: currentObj.dateisoFormat};
-                        gifshotParams.images.push(imgObj);
-                    });
-                    var fileName = this.param.title + '.gif';
-                    gifshot.createGIF(gifshotParams, function (obj) {
-                        if (!obj.error) {
-                            var image = obj.image;
-                            var download = document.createElement('a');
-                            download.href = image;
-                            download.download = fileName;
-                            document.body.appendChild(download);
-                            download.click();
-                            document.body.removeChild(download);
-                        }
-                    });
-                    this.animationDownloadSpan.setAttribute('data-disabled', 0);
-                } else {
-                    this.animationDownloadSpan.setAttribute('data-disabled', 1);
-                    let currentLayer = this.getCurrentLayer();
-                    let layerPropertiesObject = currentLayer.getProperties();
-                    let layerSourceParam = layerPropertiesObject.source.getParams();
-                    let layerUrl = layerPropertiesObject.source.getUrls()[0].split('wms')[1];
-                    let plotProp = this.param.plotInfo();
-                    let SourceURL = [];
-                    this.param.source.url.forEach(function (val) {
-                        SourceURL.push(val.split('/wms/')[1]);
-                    });
-                    plotProp.DATADIR = SourceURL
-                    plotProp.LAYER = layerSourceParam.LAYERS
-                    plotProp.COLORSCALERANGE = layerSourceParam.COLORSCALERANGE
-                    plotProp.fps = parseInt(this.fpsInput.value)
-                    plotProp.rid = parseInt($('#selectl0').val());
-                    let responseData = await myApp.makeRequestWithCookieCSRFToken('POST', this.param.api.createGIF, plotProp)
-                    let ParseJson = JSON.parse(responseData)
-                    let gifUrl = this.param.api.GetImage + "?gif=true&ImageName=" + ParseJson.image
-                    var fileName = this.param.title + '.gif';
-                    this.forceDownload(gifUrl, fileName);
-                    this.animationDownloadSpan.setAttribute('data-disabled', 0);
-                }
+            // let CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
+            if (this.isFunction(this.param.animationGIFFunction)) {
+                this.param.animationGIFFunction.bind(this);
             }
+
+            // if (!CheckDisable) {
+            // if (this.param.RGBComposite) {
+            //
+            // this.animationDownloadSpan.setAttribute('data-disabled', 1);
+            // let fps = 1 / parseInt(this.fpsInput.value)
+            // let gifshotParams = {
+            //     images: [],
+            //     gifWidth: 1000,
+            //     gifHeight: 720,
+            //     numFrames: this.AllDateAndTimeList.length,
+            //     interval: fps,
+            //     frameDuration: fps,
+            //     fontWeight: 'normal',
+            //     fontSize: '22px',
+            //     fontFamily: 'sans-serif',
+            //     fontColor: '#ffffff',
+            //     textAlign: 'center',
+            //     textBaseline: 'bottom',
+            //     sampleInterval: 10,
+            //     numWorkers: 2
+            // }
+            // let BaseUrl = this.param.source.url;
+            // this.AllDateAndTimeList.forEach((currentObj, index) => {
+            //     let WMSTileUrl = BaseUrl[index] + '?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image/png&SRS=EPSG:4326&BBOX=60,15,110,40&WIDTH=1000&HEIGHT=720' + '&LAYERS=' + this.param.source.params.LAYERS + '&TRANSPARENT=true&SLD_BODY=' + encodeURIComponent(this.param.source.params.SLD_BODY).toString() + '&TIME='
+            //     let imgObj = {src: WMSTileUrl + currentObj.dateisoFormat, text: currentObj.dateisoFormat};
+            //     gifshotParams.images.push(imgObj);
+            // });
+            // var fileName = this.param.title + '.gif';
+            // gifshot.createGIF(gifshotParams, function (obj) {
+            //     if (!obj.error) {
+            //         var image = obj.image;
+            //         var download = document.createElement('a');
+            //         download.href = image;
+            //         download.download = fileName;
+            //         document.body.appendChild(download);
+            //         download.click();
+            //         document.body.removeChild(download);
+            //     }
+            // });
+            // this.animationDownloadSpan.setAttribute('data-disabled', 0);
+            //
+            // } else {
+            //     this.animationDownloadSpan.setAttribute('data-disabled', 1);
+            //     let currentLayer = this.getCurrentLayer();
+            //     let layerPropertiesObject = currentLayer.getProperties();
+            //     let layerSourceParam = layerPropertiesObject.source.getParams();
+            //     let layerUrl = layerPropertiesObject.source.getUrls()[0].split('wms')[1];
+            //     let plotProp = this.param.plotInfo();
+            //     let SourceURL = [];
+            //     this.param.source.url.forEach(function (val) {
+            //         SourceURL.push(val.split('/wms/')[1]);
+            //     });
+            //     plotProp.DATADIR = SourceURL
+            //     plotProp.LAYER = layerSourceParam.LAYERS
+            //     plotProp.COLORSCALERANGE = layerSourceParam.COLORSCALERANGE
+            //     plotProp.fps = parseInt(this.fpsInput.value)
+            //     plotProp.rid = parseInt($('#selectl0').val());
+            //     let responseData = await myApp.makeRequestWithCookieCSRFToken('POST', this.param.api.createGIF, plotProp)
+            //     let ParseJson = JSON.parse(responseData)
+            //     let gifUrl = this.param.api.GetImage + "?gif=true&ImageName=" + ParseJson.image
+            //     var fileName = this.param.title + '.gif';
+            //     this.forceDownload(gifUrl, fileName);
+            //     this.animationDownloadSpan.setAttribute('data-disabled', 0);
+            // }
+            // }
         }, true);
     };
 

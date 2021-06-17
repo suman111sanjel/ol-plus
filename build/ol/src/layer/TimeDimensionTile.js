@@ -18,6 +18,7 @@ import '../PluggableMap';
  * @api
  */
 class TimeDimensionTile extends LayerGroup {
+
     /**
      *
      * @param {Object} params
@@ -49,22 +50,39 @@ class TimeDimensionTile extends LayerGroup {
         }
         if (this.param.ThreddsDataServerVersion == 5) {
             if (Array.isArray(this.param.source.url)) {
+                let AllPromiseList = [];
                 let index = 0;
                 for (let WMSURL of this.param.source.url) {
-                    await this.collectDateAndTime(this.param.source.url[index], index);
+                    AllPromiseList.push(this.loadMultipleDateTime(this.param.source.url[index], index, this.collectDateAndTime));
+                    // await this.collectDateAndTime();
                     index = index + 1;
                 }
+                await Promise.all(AllPromiseList).then((results) => {
+                    //pass
+                }).catch((error) => {
+                    console.log(error);
+                });
+                this.AllDateAndTimeList.sort((a, b) => (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0));
+
             } else {
                 await this.collectDateAndTime(this.param.source.url, 0);
             }
-
         } else if (this.param.ThreddsDataServerVersion == 4) {
             if (Array.isArray(this.param.source.url)) {
+                let AllPromiseList = [];
                 let index = 0;
                 for (let WMSURL of this.param.source.url) {
-                    await this.collectDateAndTimeThredd4(this.param.source.url[index], index);
+                    AllPromiseList.push(this.loadMultipleDateTime(this.param.source.url[index], index, this.collectDateAndTimeThredd4));
                     index = index + 1;
                 }
+
+                await Promise.all(AllPromiseList).then((results) => {
+                    //pass
+                }).catch((error) => {
+                    console.log(error);
+                });
+                this.AllDateAndTimeList.sort((a, b) => (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0));
+
             } else {
                 await this.collectDateAndTimeThredd4(this.param.source.url, 0);
             }
@@ -113,6 +131,19 @@ class TimeDimensionTile extends LayerGroup {
             xhr.send();
         });
     };
+
+    loadMultipleDateTime(url, index, collectDateAndTimeFn) {
+        let this_ = this;
+        return new Promise(function (resolve, reject) {
+            setTimeout(
+                async function () {
+                    await collectDateAndTimeFn.call(this_, url, index);
+                    resolve();
+                },
+                1
+            );
+        });
+    }
 
     /**
      *
@@ -166,7 +197,7 @@ class TimeDimensionTile extends LayerGroup {
             }
         }
         let index = 0;
-        let promiseList = []
+        let promiseList = [];
         for (let dateL of DateList) {
             let url = WMSURL + '?request=GetMetadata&item=timesteps&layerName=' + this.param.source.params.LAYERS + '&day=' + dateL;
             promiseList.push(this.makeRequest('GET', url, true, dateL));
@@ -854,7 +885,7 @@ class TimeDimensionTile extends LayerGroup {
         this.param.visible = visibleorNot;
 
         if (visibleorNot === true) {
-            this.container.style.display = 'block';
+            this.container.style.display = 'flex';
             if (this.param.showlegend === true) {
                 this.imageContainer.style.display = 'block';
             } else {
@@ -882,7 +913,7 @@ class TimeDimensionTile extends LayerGroup {
         let allChildrenelement = parentElement.children
         let blockCount = 0;
         for (let el of allChildrenelement) {
-            if (getComputedStyle(el)["display"] === "block") {
+            if (getComputedStyle(el)["display"] === "flex") {
                 blockCount += 1;
             }
         }

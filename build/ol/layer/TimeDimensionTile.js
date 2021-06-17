@@ -92,7 +92,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
      */
     TimeDimensionTile.prototype.init = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var index, _i, _a, WMSURL, index, _b, _c, WMSURL;
+            var AllPromiseList, index, _i, _a, WMSURL, AllPromiseList, index, _b, _c, WMSURL;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
@@ -102,55 +102,58 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                         else {
                             this.opacity = 1;
                         }
-                        if (!(this.param.ThreddsDataServerVersion == 5)) return [3 /*break*/, 8];
-                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 5];
+                        if (!(this.param.ThreddsDataServerVersion == 5)) return [3 /*break*/, 5];
+                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 2];
+                        AllPromiseList = [];
                         index = 0;
-                        _i = 0, _a = this.param.source.url;
-                        _d.label = 1;
+                        for (_i = 0, _a = this.param.source.url; _i < _a.length; _i++) {
+                            WMSURL = _a[_i];
+                            AllPromiseList.push(this.loadMultipleDateTime(this.param.source.url[index], index, this.collectDateAndTime));
+                            // await this.collectDateAndTime();
+                            index = index + 1;
+                        }
+                        return [4 /*yield*/, Promise.all(AllPromiseList).then(function (results) {
+                                //pass
+                            }).catch(function (error) {
+                                console.log(error);
+                            })];
                     case 1:
-                        if (!(_i < _a.length)) return [3 /*break*/, 4];
-                        WMSURL = _a[_i];
-                        return [4 /*yield*/, this.collectDateAndTime(this.param.source.url[index], index)];
-                    case 2:
                         _d.sent();
-                        index = index + 1;
-                        _d.label = 3;
+                        this.AllDateAndTimeList.sort(function (a, b) { return (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0); });
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, this.collectDateAndTime(this.param.source.url, 0)];
                     case 3:
-                        _i++;
-                        return [3 /*break*/, 1];
-                    case 4: return [3 /*break*/, 7];
-                    case 5: return [4 /*yield*/, this.collectDateAndTime(this.param.source.url, 0)];
+                        _d.sent();
+                        _d.label = 4;
+                    case 4: return [3 /*break*/, 11];
+                    case 5:
+                        if (!(this.param.ThreddsDataServerVersion == 4)) return [3 /*break*/, 10];
+                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 7];
+                        AllPromiseList = [];
+                        index = 0;
+                        for (_b = 0, _c = this.param.source.url; _b < _c.length; _b++) {
+                            WMSURL = _c[_b];
+                            AllPromiseList.push(this.loadMultipleDateTime(this.param.source.url[index], index, this.collectDateAndTimeThredd4));
+                            index = index + 1;
+                        }
+                        return [4 /*yield*/, Promise.all(AllPromiseList).then(function (results) {
+                                //pass
+                            }).catch(function (error) {
+                                console.log(error);
+                            })];
                     case 6:
                         _d.sent();
-                        _d.label = 7;
-                    case 7: return [3 /*break*/, 17];
+                        this.AllDateAndTimeList.sort(function (a, b) { return (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0); });
+                        return [3 /*break*/, 9];
+                    case 7: return [4 /*yield*/, this.collectDateAndTimeThredd4(this.param.source.url, 0)];
                     case 8:
-                        if (!(this.param.ThreddsDataServerVersion == 4)) return [3 /*break*/, 16];
-                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 13];
-                        index = 0;
-                        _b = 0, _c = this.param.source.url;
-                        _d.label = 9;
-                    case 9:
-                        if (!(_b < _c.length)) return [3 /*break*/, 12];
-                        WMSURL = _c[_b];
-                        return [4 /*yield*/, this.collectDateAndTimeThredd4(this.param.source.url[index], index)];
-                    case 10:
                         _d.sent();
-                        index = index + 1;
+                        _d.label = 9;
+                    case 9: return [3 /*break*/, 11];
+                    case 10:
+                        console.error("Please Provide Properties with key \"ThreddsDataServerVersion\", value should be 5 for TDS version 5 and 4 for TDS version 4");
                         _d.label = 11;
                     case 11:
-                        _b++;
-                        return [3 /*break*/, 9];
-                    case 12: return [3 /*break*/, 15];
-                    case 13: return [4 /*yield*/, this.collectDateAndTimeThredd4(this.param.source.url, 0)];
-                    case 14:
-                        _d.sent();
-                        _d.label = 15;
-                    case 15: return [3 /*break*/, 17];
-                    case 16:
-                        console.error("Please Provide Properties with key \"ThreddsDataServerVersion\", value should be 5 for TDS version 5 and 4 for TDS version 4");
-                        _d.label = 17;
-                    case 17:
                         this.createLayers();
                         this.layerVisibilityInitiliazation();
                         // this.addLayerPrototypeOfMap();
@@ -197,6 +200,24 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         });
     };
     ;
+    TimeDimensionTile.prototype.loadMultipleDateTime = function (url, index, collectDateAndTimeFn) {
+        var this_ = this;
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                return __awaiter(this, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, collectDateAndTimeFn.call(this_, url, index)];
+                            case 1:
+                                _a.sent();
+                                resolve();
+                                return [2 /*return*/];
+                        }
+                    });
+                });
+            }, 1);
+        });
+    };
     /**
      *
      * @param {*} url Url to the file gif image
@@ -961,7 +982,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         currentLayer.setVisible(visibleorNot);
         this.param.visible = visibleorNot;
         if (visibleorNot === true) {
-            this.container.style.display = 'block';
+            this.container.style.display = 'flex';
             if (this.param.showlegend === true) {
                 this.imageContainer.style.display = 'block';
             }
@@ -991,7 +1012,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         var blockCount = 0;
         for (var _i = 0, allChildrenelement_1 = allChildrenelement; _i < allChildrenelement_1.length; _i++) {
             var el = allChildrenelement_1[_i];
-            if (getComputedStyle(el)["display"] === "block") {
+            if (getComputedStyle(el)["display"] === "flex") {
                 blockCount += 1;
             }
         }
