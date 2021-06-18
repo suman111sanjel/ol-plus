@@ -1,8 +1,26 @@
-html, body, .map {
+html, body,.outerDiv{
     height: 100%;
-    width: 100%;
+ width: 100%;
+
 }
 
 body{
     margin: 0px;
+}
+.map{
+    width: 70%;
+     height: 100%;
+        display: inline-block;
+}
+.layerCollection{
+    width: 30%;
+     height: 100%;
+}
+.layerCollection {
+    font-size: 12px;
+    font-family: "Open Sans", "Segoe UI", sans-serif, Verdana, Helvetica;
+}
+
+.LayerDiv.withOpacSlider {
+    margin-bottom: 18px;
 }

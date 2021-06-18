@@ -423,11 +423,10 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         this.AllLayersList[0].setOpacity(this.opacity);
         this.UIinitilization();
         this.legendUIInitilization();
-        if (this.isFunction(this.param.customLegend)) {
+        if (this.param.customLegendElement) {
             // debugger;
             this.imageContainer.innerHTML = '';
-            var customElement = this.param.customLegend(this.param.customLegendData);
-            this.imageContainer.append(customElement);
+            this.imageContainer.append(this.param.customLegendElement);
         }
         if (visibile === true) {
             this.setVisible(true);
@@ -773,79 +772,12 @@ var TimeDimensionTile = /** @class */ (function (_super) {
             }
         };
         this.animationDownloadSpan.addEventListener('click', function () { return __awaiter(_this, void 0, void 0, function () {
-            var CheckDisable, fps, gifshotParams_1, BaseUrl_1, fileName, currentLayer, layerPropertiesObject, layerSourceParam, layerUrl, plotProp, SourceURL_1, responseData, ParseJson, gifUrl, fileName;
-            var _this = this;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
-                        if (!!CheckDisable) return [3 /*break*/, 3];
-                        if (!this.param.RGBComposite) return [3 /*break*/, 1];
-                        this.animationDownloadSpan.setAttribute('data-disabled', 1);
-                        fps = 1 / parseInt(this.fpsInput.value);
-                        gifshotParams_1 = {
-                            images: [],
-                            gifWidth: 1000,
-                            gifHeight: 720,
-                            numFrames: this.AllDateAndTimeList.length,
-                            interval: fps,
-                            frameDuration: fps,
-                            fontWeight: 'normal',
-                            fontSize: '22px',
-                            fontFamily: 'sans-serif',
-                            fontColor: '#ffffff',
-                            textAlign: 'center',
-                            textBaseline: 'bottom',
-                            sampleInterval: 10,
-                            numWorkers: 2
-                        };
-                        BaseUrl_1 = this.param.source.url;
-                        this.AllDateAndTimeList.forEach(function (currentObj, index) {
-                            var WMSTileUrl = BaseUrl_1[index] + '?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&FORMAT=image/png&SRS=EPSG:4326&BBOX=60,15,110,40&WIDTH=1000&HEIGHT=720' + '&LAYERS=' + _this.param.source.params.LAYERS + '&TRANSPARENT=true&SLD_BODY=' + encodeURIComponent(_this.param.source.params.SLD_BODY).toString() + '&TIME=';
-                            var imgObj = { src: WMSTileUrl + currentObj.dateisoFormat, text: currentObj.dateisoFormat };
-                            gifshotParams_1.images.push(imgObj);
-                        });
-                        fileName = this.param.title + '.gif';
-                        gifshot.createGIF(gifshotParams_1, function (obj) {
-                            if (!obj.error) {
-                                var image = obj.image;
-                                var download = document.createElement('a');
-                                download.href = image;
-                                download.download = fileName;
-                                document.body.appendChild(download);
-                                download.click();
-                                document.body.removeChild(download);
-                            }
-                        });
-                        this.animationDownloadSpan.setAttribute('data-disabled', 0);
-                        return [3 /*break*/, 3];
-                    case 1:
-                        this.animationDownloadSpan.setAttribute('data-disabled', 1);
-                        currentLayer = this.getCurrentLayer();
-                        layerPropertiesObject = currentLayer.getProperties();
-                        layerSourceParam = layerPropertiesObject.source.getParams();
-                        layerUrl = layerPropertiesObject.source.getUrls()[0].split('wms')[1];
-                        plotProp = this.param.plotInfo();
-                        SourceURL_1 = [];
-                        this.param.source.url.forEach(function (val) {
-                            SourceURL_1.push(val.split('/wms/')[1]);
-                        });
-                        plotProp.DATADIR = SourceURL_1;
-                        plotProp.LAYER = layerSourceParam.LAYERS;
-                        plotProp.COLORSCALERANGE = layerSourceParam.COLORSCALERANGE;
-                        plotProp.fps = parseInt(this.fpsInput.value);
-                        plotProp.rid = parseInt($('#selectl0').val());
-                        return [4 /*yield*/, myApp.makeRequestWithCookieCSRFToken('POST', this.param.api.createGIF, plotProp)];
-                    case 2:
-                        responseData = _a.sent();
-                        ParseJson = JSON.parse(responseData);
-                        gifUrl = this.param.api.GetImage + "?gif=true&ImageName=" + ParseJson.image;
-                        fileName = this.param.title + '.gif';
-                        this.forceDownload(gifUrl, fileName);
-                        this.animationDownloadSpan.setAttribute('data-disabled', 0);
-                        _a.label = 3;
-                    case 3: return [2 /*return*/];
+                // let CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
+                if (this.isFunction(this.param.animationGIFFunction)) {
+                    this.param.animationGIFFunction.bind(this);
                 }
+                return [2 /*return*/];
             });
         }); }, true);
     };

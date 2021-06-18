@@ -9,6 +9,8 @@ import TimeDimensionTile from "../src/ol/layer/TimeDimensionTile";
 import {transformExtent} from "ol/proj";
 import {getCenter} from "ol/extent";
 import EDALSLD from "../src/ol/sld/EDALSLD";
+import LayerSwitcher from '../src/ol/ui/LayerSwitcher'
+
 var extent = transformExtent([60, 0, 100, 60], 'EPSG:4326', 'EPSG:3857');
 
 var layers = [
@@ -25,13 +27,13 @@ var map = new Map({
     }),
 });
 
-let allUrlList=[];
+let allUrlList = [];
 
 let files = ["Retro.20180101.nc", "Retro.20180111.nc", "Retro.20180121.nc", "Retro.20180201.nc", "Retro.20180211.nc", "Retro.20180221.nc", "Retro.20180301.nc", "Retro.20180311.nc", "Retro.20180321.nc", "Retro.20180401.nc", "Retro.20180411.nc", "Retro.20180421.nc", "Retro.20180501.nc", "Retro.20180511.nc", "Retro.20180521.nc", "Retro.20180601.nc", "Retro.20180611.nc", "Retro.20180621.nc", "Retro.20180701.nc", "Retro.20180711.nc", "Retro.20180721.nc", "Retro.20180801.nc", "Retro.20180811.nc", "Retro.20180821.nc", "Retro.20180901.nc", "Retro.20180911.nc", "Retro.20180921.nc", "Retro.20181001.nc", "Retro.20181011.nc", "Retro.20181021.nc", "Retro.20181101.nc", "Retro.20181111.nc", "Retro.20181121.nc", "Retro.20181201.nc", "Retro.20181211.nc", "Retro.20181221.nc"];
 
-let WMSUrl='http://tethys.icimod.org:8080/thredds/wms/sldas/dekad/';
-files.forEach(function (fi){
-   allUrlList.push(WMSUrl+fi) ;
+let WMSUrl = 'http://tethys.icimod.org:8080/thredds/wms/sldas/dekad/';
+files.forEach(function (fi) {
+    allUrlList.push(WMSUrl + fi);
 });
 
 var mm = new TimeDimensionTile({
@@ -43,7 +45,7 @@ var mm = new TimeDimensionTile({
     showlegend: true,
     ThreddsDataServerVersion: "5",
     timeSliderSize: 'small',
-    alignTimeSlider:'left',
+    alignTimeSlider: 'left',
     source: {
         url: allUrlList,
         params: {
@@ -56,11 +58,11 @@ var mm = new TimeDimensionTile({
 });
 
 
-mm.init().then((val) => map.addThreddsLayer(val),
+mm.init().then((val) => {
+        let l1 = new LayerSwitcher(".layerCollection", mm, false, true);
+        map.addThreddsLayer(val);
+    },
     (error) => console.error(error));
-
-
-
 
 
 // var kk = new TimeDimensionTile({
@@ -93,9 +95,9 @@ mm.init().then((val) => map.addThreddsLayer(val),
 //
 // }
 
-let SLDParam={
+let SLDParam = {
     title: 'Air Temperature',
-    showLegendTitle:false,
+    showLegendTitle: false,
     parameterName: 'Tair_f_tavg',
     propForSLD: [{
         classType: 'Below',
@@ -113,10 +115,10 @@ let SLDParam={
         range: [-4, -3.5]
     }, {
         label: ["-3.5 to -3", ""], color: '#9CC2FF',
-        range: [-3.5 ,-3]
+        range: [-3.5, -3]
     }, {
         label: ["-3 to -2.5", ""], color: '#9CD1FF',
-        range: [-3 ,-2.5]
+        range: [-3, -2.5]
     }, {
         label: ["-2.5 to -2", ""], color: '#9CDEFF',
         range: [-2.5, -2]
@@ -137,7 +139,7 @@ let SLDParam={
         range: [0, 0.5]
     }, {
         label: ["0.5 to 1", ""], color: '#E1E1E1',
-        range: [0.5 ,1]
+        range: [0.5, 1]
     }, {
         label: ["1 to 1.5", ""], color: '#FFFFBE',
         range: [1, 1.5]
@@ -149,7 +151,7 @@ let SLDParam={
         range: [2, 2.5]
     }, {
         label: ["2.5 to 3", ""], color: '#E69800',
-        range: [2.5 ,3]
+        range: [2.5, 3]
     }, {
         label: ["3 to 3.5", ""], color: '#FF7F7F',
         range: [3, 3.5]
@@ -158,7 +160,7 @@ let SLDParam={
         range: [3.5, 4]
     }, {
         label: ["4 to 4.5", ""], color: '#A83800',
-        range: [4 ,4.5]
+        range: [4, 4.5]
     }, {
         label: ["4.5 to 5", ""], color: '#732600',
         range: [4.5, 5]
@@ -180,21 +182,24 @@ var kk = new TimeDimensionTile({
     showlegend: true,
     ThreddsDataServerVersion: "5",
     timeSliderSize: 'small',
-    alignTimeSlider:'left',
-    customLegendElement:EdalSldObj.getLegendHTMLElement(),
-    showAnimationButton:true,
+    alignTimeSlider: 'left',
+    customLegendElement: EdalSldObj.getLegendHTMLElement(),
+    showAnimationButton: true,
     source: {
         url: 'http://110.34.30.197:8080/thredds/wms/saldasforecast/monthly_std_mean.ncml',
         params: {
             'VERSION': '1.1.1',
             'LAYERS': SLDParam.parameterName,
-            'SLD_BODY':EdalSldObj.getEDALSLD(),
+            'SLD_BODY': EdalSldObj.getEDALSLD(),
         }
     },
 
 });
 
 
-kk.init().then((val) => map.addThreddsLayer(val),
+kk.init().then((val) =>{
+    let l1 = new LayerSwitcher(".layerCollection", kk, true, true,'withOpacSlider');
+  map.addThreddsLayer(val);
+} ,
     (error) => console.error(error));
 

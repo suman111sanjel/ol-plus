@@ -103,8 +103,8 @@ class EDALSLD {
         table.append(tbody);
         if (this.param.showLegendTitle) {
             outerDiv.append(span);
-            outerDiv.append(br);
         }
+        outerDiv.append(br);
         outerDiv.append(table);
         return outerDiv
     }
