@@ -83,15 +83,9 @@ class LayerCheckBox {
 
         this.legendDiv = createDiv('legend-div');
         this.legendDiv.style.display = 'none';
-        if (this.layerPropertiesObject.customLegendElement) {
-            let el=this.layerPropertiesObject.customLegendElement.cloneNode( true );
-            this.legendDiv.append(el);
-        } else {
-            let imgTag = createImg("legend-image");
-            imgTag.setAttribute("src", this.legendPath);
-            this.legendDiv.append(imgTag)
-        }
-
+        let imgTag = createImg("legend-image");
+        imgTag.setAttribute("src", this.legendPath);
+        this.legendDiv.append(imgTag)
         this.outDIv.append(this.legendDiv);
 
         let LayerOpacityDiv = createDiv('opac-div');

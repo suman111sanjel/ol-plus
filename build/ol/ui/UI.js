@@ -75,4 +75,13 @@ export var createTd = function (ClassName) {
     var i = createElement('td', ClassName);
     return i;
 };
+export var createInputRange = function (ClassName, min, max, step, value) {
+    var i = createInput(ClassName);
+    i.setAttribute("type", "range");
+    i.setAttribute("min", min);
+    i.setAttribute("max", max);
+    i.setAttribute("step", step);
+    i.setAttribute("value", value);
+    return i;
+};
 //# sourceMappingURL=UI.js.map

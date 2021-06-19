@@ -59,6 +59,7 @@ import "./threddsDataserver.css";
 import TileLayer from 'ol/layer/Tile';
 import TileWMS from 'ol/source/TileWMS';
 import '../PluggableMap';
+import { createDiv, createSpan, createA, createI, createImg, createInputRange, } from "../ui/UI";
 /**
  * @classdesc
  * This layer is used for the visualization of time series data
@@ -443,11 +444,11 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         this.timeLayerLedgendDiv = document.querySelector('div.time-layer-ledgend-div');
         var olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
         if (!this.timeLayerLedgendDiv) {
-            this.timeLayerLedgendDiv = this.createDiv('time-layer-ledgend-div custom-thredd-Scroll');
+            this.timeLayerLedgendDiv = createDiv('time-layer-ledgend-div custom-thredd-Scroll');
             olOverlaycontainer.append(this.timeLayerLedgendDiv);
         }
-        this.imageContainer = this.createDiv("thredd-layer-image-div");
-        var imageNode = this.createImg();
+        this.imageContainer = createDiv("thredd-layer-image-div");
+        var imageNode = createImg();
         imageNode.setAttribute("src", this.param.legendPath);
         this.imageContainer.append(imageNode);
         this.timeLayerLedgendDiv.append(this.imageContainer);
@@ -460,7 +461,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         this.timeSliderDiv = document.querySelector('div.timeSliderDiv');
         var olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
         if (!this.timeSliderDiv) {
-            this.timeSliderDiv = this.createDiv('timeSliderDiv custom-thredd-Scroll');
+            this.timeSliderDiv = createDiv('timeSliderDiv custom-thredd-Scroll');
             // this.timeSliderDiv.style.width = this.ParentDivWidth.toString() + "px";
             if (this.param.alignTimeSlider === "left") {
                 this.timeSliderDiv.style.left = "10px";
@@ -507,54 +508,54 @@ var TimeDimensionTile = /** @class */ (function (_super) {
      */
     TimeDimensionTile.prototype.completeUI = function () {
         var containerClass = 'timeSliderInnerDiv' + " " + this.param.id;
-        this.container = this.createDiv(containerClass);
-        this.timeMapTitle = this.createDiv('time-map-title');
+        this.container = createDiv(containerClass);
+        this.timeMapTitle = createDiv('time-map-title');
         this.timeMapTitle.innerText = this.param.title;
-        this.btnGroup = this.createDiv('btn-group');
+        this.btnGroup = createDiv('btn-group');
         //step-backward
-        this.spanStepBack = this.createSpan('btn btn-sm btn-default');
-        var iStepBack = this.createI('glyphicon glyphicon-step-backward');
+        this.spanStepBack = createSpan('btn btn-sm btn-default');
+        var iStepBack = createI('glyphicon glyphicon-step-backward');
         this.spanStepBack.append(iStepBack);
         //play-pause
-        this.spanPlayPause = this.createSpan('btn btn-sm btn-default thredds-data-server-play-pause');
-        this.iPlayPause = this.createI('glyphicon glyphicon-play');
+        this.spanPlayPause = createSpan('btn btn-sm btn-default thredds-data-server-play-pause');
+        this.iPlayPause = createI('glyphicon glyphicon-play');
         this.iPlayPause.setAttribute("playing", false);
         this.spanPlayPause.append(this.iPlayPause);
         //StepForward
-        this.spanStepForward = this.createSpan('btn btn-sm btn-default');
-        var iStepForward = this.createI('glyphicon glyphicon-step-forward');
+        this.spanStepForward = createSpan('btn btn-sm btn-default');
+        var iStepForward = createI('glyphicon glyphicon-step-forward');
         this.spanStepForward.append(iStepForward);
         //StepForward
-        this.spanRepeatToggle = this.createSpan('btn btn-sm btn-default time-threads-repeat-toggle border-right');
+        this.spanRepeatToggle = createSpan('btn btn-sm btn-default time-threads-repeat-toggle border-right');
         this.spanRepeatToggle.setAttribute("repeat", false);
-        var iRepeatToggle = this.createI('glyphicon glyphicon-repeat');
+        var iRepeatToggle = createI('glyphicon glyphicon-repeat');
         this.spanRepeatToggle.append(iRepeatToggle);
         // Date-Time
-        this.aTime = this.createA('thredds-data-server-data-time timecontrol-date');
+        this.aTime = createA('thredds-data-server-data-time timecontrol-date');
         this.aTime.innerText = this.AllDateAndTimeList[0].dateisoFormatForLevel;
         this.aTime.style.backgroundColor = "#fff";
         this.aTime.setAttribute("href", "javascript:void(0)");
         this.aTime.setAttribute("title", "Date");
         this.aTime.setAttribute("format", "ISO");
         // slider
-        this.sliderDiv = this.createDiv('thredds-data-server-control-rangecontrol');
+        this.sliderDiv = createDiv('thredds-data-server-control-rangecontrol');
         this.sliderDiv.style.width = "203px";
         var lengthOfLayers = this.AllLayersList.length - 1;
-        this.sliderInput = this.createInputRange("thredds-range thredds-data-server-slider-pic-range", 0, lengthOfLayers, 0);
+        this.sliderInput = createInputRange("thredds-range thredds-data-server-slider-pic-range", 0, lengthOfLayers, 0);
         this.sliderDiv.append(this.sliderInput);
         //slider fps
-        this.fpsDiv = this.createDiv('thredds-data-server-control-rangecontrol glyphicon-dashboard');
+        this.fpsDiv = createDiv('thredds-data-server-control-rangecontrol glyphicon-dashboard');
         this.fpsDiv.style.width = "122px";
-        this.fpsSpan = this.createSpan("speed");
+        this.fpsSpan = createSpan("speed");
         this.fpsSpan.innerText = "1fps";
-        this.fpsInput = this.createInputRange("thredds-range thredds-data-server-slider-pic-range-fps", 1, 6, 1);
+        this.fpsInput = createInputRange("thredds-range thredds-data-server-slider-pic-range-fps", 1, 6, 1, 1);
         this.fpsDiv.append(this.fpsSpan);
         this.fpsDiv.append(this.fpsInput);
         //Animation Download
-        this.animationDownloadSpan = this.createSpan('btn btn-sm btn-default border-right');
+        this.animationDownloadSpan = createSpan('btn btn-sm btn-default border-right');
         this.animationDownloadSpan.setAttribute('title', 'Download Animation');
         this.animationDownloadSpan.setAttribute('data-disabled', 0);
-        this.downloadIcon = this.createI('glyphicon glyphicon-download-alt');
+        this.downloadIcon = createI('glyphicon glyphicon-download-alt');
         this.animationDownloadSpan.append(this.downloadIcon);
         this.btnGroup.append(this.spanStepBack);
         this.btnGroup.append(this.spanPlayPause);
@@ -808,100 +809,6 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                 this.aTime.style.backgroundColor = "#fff";
             }
         }
-    };
-    ;
-    /**
-     *
-     * @param {*} type
-     * @param {*} className
-     * @returns {$ElementType}
-     */
-    TimeDimensionTile.prototype.createElement = function (type, className) {
-        var _a;
-        var element = document.createElement(type);
-        if (className) {
-            var classList = className.split(" ");
-            (_a = element.classList).add.apply(_a, classList);
-        }
-        return element;
-    };
-    ;
-    /**
-     *
-     * @param {*} ClassName
-     * @returns {$ElementType}
-     */
-    TimeDimensionTile.prototype.createDiv = function (ClassName) {
-        var div = this.createElement('div', ClassName);
-        return div;
-    };
-    ;
-    /**
-     *
-     * @param {*} ClassName
-     * @returns {$ElementType}
-     */
-    TimeDimensionTile.prototype.createSpan = function (ClassName) {
-        var span = this.createElement('span', ClassName);
-        return span;
-    };
-    ;
-    /**
-     *
-     * @param {*} ClassName
-     * @returns {$ElementType}
-     */
-    TimeDimensionTile.prototype.createA = function (ClassName) {
-        var a = this.createElement('a', ClassName);
-        return a;
-    };
-    ;
-    /**
-     *
-     * @param {*} ClassName
-     * @returns {$ElementType}
-     */
-    TimeDimensionTile.prototype.createI = function (ClassName) {
-        var i = this.createElement('i', ClassName);
-        return i;
-    };
-    ;
-    /**
-     *
-     * @param {*} ClassName
-     * @returns {$ElementType}
-     */
-    TimeDimensionTile.prototype.createImg = function (ClassName) {
-        var img = this.createElement('img', ClassName);
-        return img;
-    };
-    ;
-    /**
-     *
-     * @param {*} ClassName
-     * @returns {$ElementType}
-     */
-    TimeDimensionTile.prototype.createInput = function (ClassName) {
-        var i = this.createElement('input', ClassName);
-        return i;
-    };
-    ;
-    /**
-     *
-     * @param {*} ClassName
-     * @param {*} min
-     * @param {*} max
-     * @param {*} value
-     * @returns {$ElementType}
-     */
-    TimeDimensionTile.prototype.createInputRange = function (ClassName, min, max, value) {
-        var i = this.createInput(ClassName);
-        i.setAttribute("type", "range");
-        i.setAttribute("min", min);
-        i.setAttribute("max", max);
-        i.setAttribute("step", 1);
-        i.setAttribute("value", value);
-        return i;
     };
     ;
     /**
