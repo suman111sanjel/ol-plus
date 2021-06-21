@@ -196,7 +196,6 @@ var kk = new TimeDimensionTile({
 
 });
 
-
 kk.init().then((val) =>{
     let l1 = new LayerSwitcher(".layerCollection", kk, true, true,'withOpacSlider');
   map.addThreddsLayer(val);
