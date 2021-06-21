@@ -4,12 +4,12 @@ import {
     createImg,
     createInput,
     createLabel
-} from "./UI";
+} from './UI';
 
-// import '../bootstrap-slider.min.js';
+import '../bootstrap-slider.min.js';
 import '../bootstrap-slider.min.css';
 import './LayerSwitcher.css'
-import Slider from '../bootstrap-slider.min'
+// import Slider from '../bootstrap-slider.min'
 
 class LayerCheckBox {
     constructor(AppendingDivID, LayerObject, OpacitySlider, LegendDropDown, customCSSClass) {
