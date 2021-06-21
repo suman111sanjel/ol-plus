@@ -54,12 +54,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
  */
 // import ol_ext_inherits from '../util/ext'
 import LayerGroup from 'ol/layer/Group.js';
-import "../iso8601";
-import "./threddsDataserver.css";
+import '../iso8601';
+import './threddsDataserver.css';
 import TileLayer from 'ol/layer/Tile';
 import TileWMS from 'ol/source/TileWMS';
 import '../PluggableMap';
-import { createDiv, createSpan, createA, createI, createImg, createInputRange, } from "../ui/UI";
+import { createDiv, createSpan, createA, createI, createImg, createInputRange, } from '../ui/UI';
 /**
  * @classdesc
  * This layer is used for the visualization of time series data

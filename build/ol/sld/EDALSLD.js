@@ -1,5 +1,5 @@
 import { createDiv, createSpan, createB, createBr, createTable, createTbody, createTr, createTd } from '../ui/UI';
-import "./EDALSLD.css";
+import './EDALSLD.css';
 var EDALSLD = /** @class */ (function () {
     function EDALSLD(params) {
         this.param = { showLegendTitle: true };
