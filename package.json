@@ -1,6 +1,6 @@
 {
   "name": "ol-plus",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Interactive plugin to Openlayers",
   "main": "index.js",
   "scripts": {
@@ -62,7 +62,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
+    "bootstrap-slider": "^11.0.2",
     "jquery": "^3.6.0",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "sass": "^1.35.1",
+    "sass-loader": "^12.1.0"
   }
 }

@@ -1,8 +1,8 @@
 import { createDiv, createSpan, createImg, createInput, createLabel } from './UI';
-import '../bootstrap-slider.min.js';
 import '../bootstrap-slider.min.css';
 import './LayerSwitcher.css';
-// import Slider from '../bootstrap-slider.min'
+import '../jquery-3.3.1.min';
+import '../bootstrap-slider.min.js';
 var LayerCheckBox = /** @class */ (function () {
     function LayerCheckBox(AppendingDivID, LayerObject, OpacitySlider, LegendDropDown, customCSSClass) {
         this.divID = AppendingDivID;

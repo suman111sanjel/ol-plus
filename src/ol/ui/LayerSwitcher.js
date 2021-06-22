@@ -7,10 +7,16 @@ import {
 } from './UI';
 
 
-import '../bootstrap-slider.min.css';
+// import '../bootstrap-slider.min.css';
+
+// import '../jquery-3.3.1.min';
+// import '../bootstrap-slider.min.js';
+// var Slider = require("bootstrap-slider/src/js/bootstrap-slider");
+
+import 'bootstrap-slider/src/sass/bootstrap-slider.scss';
+import Slider from 'bootstrap-slider/src/js/bootstrap-slider';
+
 import './LayerSwitcher.css';
-import '../jquery-3.3.1.min';
-import '../bootstrap-slider.min.js';
 
 
 class LayerCheckBox {
