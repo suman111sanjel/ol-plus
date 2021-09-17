@@ -6,15 +6,16 @@ module.exports = {
     entry: './example/index.js',
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, './dist'),
-        publicPath: ''
+        path: path.resolve(__dirname, './distExamples'),
+        publicPath: '/distExamples'
     },
     mode: 'development',
     target: 'es5',
     devServer: {
         contentBase: path.resolve(__dirname, './distExamples'),
-        index: 'index.html',
-        port: 9000
+        index: 'page-template.html',
+        port: 9000,
+        writeToDisk:true
     },
     module: {
         rules: [

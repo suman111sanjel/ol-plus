@@ -1,8 +1,11 @@
 import { createDiv, createSpan, createImg, createInput, createLabel } from './UI';
-import '../bootstrap-slider.min.css';
+// import '../bootstrap-slider.min.css';
+// import '../jquery-3.3.1.min';
+// import '../bootstrap-slider.min.js';
+// var Slider = require("bootstrap-slider/src/js/bootstrap-slider");
+import 'bootstrap-slider/src/sass/bootstrap-slider.scss';
+import Slider from 'bootstrap-slider/src/js/bootstrap-slider';
 import './LayerSwitcher.css';
-import '../jquery-3.3.1.min';
-import '../bootstrap-slider.min.js';
 var LayerCheckBox = /** @class */ (function () {
     function LayerCheckBox(AppendingDivID, LayerObject, OpacitySlider, LegendDropDown, customCSSClass) {
         this.divID = AppendingDivID;

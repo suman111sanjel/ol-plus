@@ -4,9 +4,7 @@ class EDALSLD {
     constructor(params) {
         this.param = {showLegendTitle: true}
         this.param = Object.assign(this.param, params);
-
         let ColorAndValueStringXMl = '';
-
         for (let i of params.propForSLD) {
 
             if (i.classType === 'Below') {
@@ -33,7 +31,6 @@ class EDALSLD {
                 }
             }
         }
-
         this.createSLD(params.parameterName, ColorAndValueStringXMl);
     }
 
@@ -80,7 +77,7 @@ class EDALSLD {
         if (this.param.showLegendTitle) {
             span = createSpan("legend-text");
             let b = createB();
-            b.innerText = this.param.title;
+            b.innerHTML = this.param.title;
             span.append(b);
         }
         let br = createBr();
