@@ -7,12 +7,13 @@ import 'bootstrap-slider/src/sass/bootstrap-slider.scss';
 import Slider from 'bootstrap-slider/src/js/bootstrap-slider';
 import './LayerSwitcher.css';
 var LayerCheckBox = /** @class */ (function () {
-    function LayerCheckBox(AppendingDivID, LayerObject, OpacitySlider, LegendDropDown, customCSSClass) {
+    function LayerCheckBox(AppendingDivID, LayerObject, OpacitySlider, LegendDropDown, customCSSClass, draggable) {
         this.divID = AppendingDivID;
         this.layerObj = LayerObject;
         this.DisplayOpacity = OpacitySlider;
         this.DisplayLegendDropDown = LegendDropDown;
         this.customCSSClass = customCSSClass;
+        this.draggable = draggable;
         this.init();
     }
     LayerCheckBox.prototype.checkLayerProperties = function () {

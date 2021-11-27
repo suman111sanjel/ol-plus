@@ -50,7 +50,7 @@ var EDALSLD = /** @class */ (function () {
         if (this.param.showLegendTitle) {
             span = createSpan("legend-text");
             var b = createB();
-            b.innerText = this.param.title;
+            b.innerHTML = this.param.title;
             span.append(b);
         }
         var br = createBr();

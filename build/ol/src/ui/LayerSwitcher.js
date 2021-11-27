@@ -20,12 +20,13 @@ import './LayerSwitcher.css';
 
 
 class LayerCheckBox {
-    constructor(AppendingDivID, LayerObject, OpacitySlider, LegendDropDown, customCSSClass) {
+    constructor(AppendingDivID, LayerObject, OpacitySlider, LegendDropDown, customCSSClass,draggable) {
         this.divID = AppendingDivID;
         this.layerObj = LayerObject;
         this.DisplayOpacity = OpacitySlider;
         this.DisplayLegendDropDown = LegendDropDown;
         this.customCSSClass = customCSSClass;
+        this.draggable = draggable;
         this.init();
     }
 
@@ -67,7 +68,6 @@ class LayerCheckBox {
             this.outDIv.classList.add(...classList)
         }
         let paddingDiv = createDiv("paddingForDiv");
-
         let OuterDiv = createDiv('custom-control custom-checkbox layerCheckPadding');
         this.CheckboxInput = createInput('custom-control-input');
         this.CheckboxInput.setAttribute('type', 'checkbox');
@@ -85,10 +85,9 @@ class LayerCheckBox {
         this.cheveronSapn.setAttribute('title', "Show/Hide Legend");
         this.cheveronSapn.setAttribute('show-legend', false);
         ChevronDiv.append(this.cheveronSapn)
-        paddingDiv.append(OuterDiv)
-        paddingDiv.append(ChevronDiv)
+        paddingDiv.append(OuterDiv);
+        paddingDiv.append(ChevronDiv);
         this.outDIv.append(paddingDiv);
-
 
         this.legendDiv = createDiv('legend-div');
         this.legendDiv.style.display = 'none';
