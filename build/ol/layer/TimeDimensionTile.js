@@ -777,7 +777,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 // let CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
                 if (this.isFunction(this.param.animationGIFFunction)) {
-                    this.param.animationGIFFunction.bind(this);
+                    this.param.animationGIFFunction.call(this);
                 }
                 return [2 /*return*/];
             });

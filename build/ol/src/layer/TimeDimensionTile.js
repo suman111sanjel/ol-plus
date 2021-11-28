@@ -673,7 +673,7 @@ class TimeDimensionTile extends LayerGroup {
         this.animationDownloadSpan.addEventListener('click', async () => {
             // let CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
             if (this.isFunction(this.param.animationGIFFunction)) {
-                this.param.animationGIFFunction.bind(this);
+                this.param.animationGIFFunction.call(this);
             }
 
             // if (!CheckDisable) {
