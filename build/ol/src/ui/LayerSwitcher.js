@@ -20,7 +20,7 @@ import './LayerSwitcher.css';
 
 
 class LayerCheckBox {
-    constructor(AppendingDivID, LayerObject, OpacitySlider, LegendDropDown, customCSSClass,draggable) {
+    constructor(AppendingDivID, LayerObject, OpacitySlider, LegendDropDown, customCSSClass, draggable) {
         this.divID = AppendingDivID;
         this.layerObj = LayerObject;
         this.DisplayOpacity = OpacitySlider;
@@ -92,7 +92,7 @@ class LayerCheckBox {
         this.legendDiv = createDiv('legend-div');
         this.legendDiv.style.display = 'none';
         if (this.layerPropertiesObject.customLegendElement) {
-            let el=this.layerPropertiesObject.customLegendElement.cloneNode( true );
+            let el = this.layerPropertiesObject.customLegendElement.cloneNode(true);
             this.legendDiv.append(el);
         } else {
             let imgTag = createImg("legend-image");
@@ -165,6 +165,10 @@ class LayerCheckBox {
         this.layerObj.setVisible(param);
         this.CheckboxInput.checked = param;
         this.outDIv.style.display = 'block';
+        // Create a new 'change' event
+        var event = new Event('change');
+        // Dispatch it.
+        this.CheckboxInput.dispatchEvent(event);
     };
 
     setVisibleDivBind(param) {
@@ -175,6 +179,11 @@ class LayerCheckBox {
         } else {
             this.outDIv.style.display = 'none';
         }
+
+        // Create a new 'change' event
+        var event = new Event('change');
+        // Dispatch it.
+        this.CheckboxInput.dispatchEvent(event);
     };
 
     init() {

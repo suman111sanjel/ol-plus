@@ -145,6 +145,10 @@ var LayerCheckBox = /** @class */ (function () {
         this.layerObj.setVisible(param);
         this.CheckboxInput.checked = param;
         this.outDIv.style.display = 'block';
+        // Create a new 'change' event
+        var event = new Event('change');
+        // Dispatch it.
+        this.CheckboxInput.dispatchEvent(event);
     };
     ;
     LayerCheckBox.prototype.setVisibleDivBind = function (param) {
@@ -156,6 +160,10 @@ var LayerCheckBox = /** @class */ (function () {
         else {
             this.outDIv.style.display = 'none';
         }
+        // Create a new 'change' event
+        var event = new Event('change');
+        // Dispatch it.
+        this.CheckboxInput.dispatchEvent(event);
     };
     ;
     LayerCheckBox.prototype.init = function () {

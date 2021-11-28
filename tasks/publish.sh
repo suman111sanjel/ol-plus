@@ -2,6 +2,7 @@
 #initially create new tag and push to server
 #git tag v1.0.0
 #git push --tags
+#./tasks/publish.sh 1.0.0
 
 #
 # Run this script to publish a new version of the library to npm.  This requires
