@@ -380,7 +380,8 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                     source = new TileWMS({
                         url: b.WMSURL,
                         hidpi: false,
-                        params: stri
+                        params: stri,
+                        crossOrigin: 'anonymous'
                     });
                     var tilePara = Object.assign({}, that.param);
                     // let tilePara = JSON.parse(JSON.stringify(that.param));
