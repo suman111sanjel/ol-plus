@@ -71,7 +71,7 @@ class TimeDimensionTile extends LayerGroup {
                 // }).catch((error) => {
                 //     console.log(error);
                 // });
-                this.PromiseAllTDL(AllPromiseList);
+                await this.PromiseAllTDL(AllPromiseList);
                 this.AllDateAndTimeList.sort((a, b) => (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0));
             } else {
                 await this.collectDateAndTime(this.param.source.url, 0);
@@ -91,7 +91,7 @@ class TimeDimensionTile extends LayerGroup {
                 //     console.log(error);
                 // });
 
-                this.PromiseAllTDL(AllPromiseList);
+                await this.PromiseAllTDL(AllPromiseList);
                 this.AllDateAndTimeList.sort((a, b) => (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0));
 
             } else {
@@ -1027,4 +1027,3 @@ class TimeDimensionTile extends LayerGroup {
 }
 
 export default TimeDimensionTile;
-

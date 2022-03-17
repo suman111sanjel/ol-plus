@@ -9,7 +9,16 @@ import './threddsDataserver.css';
 import TileLayer from 'ol/layer/Tile';
 import TileWMS from 'ol/source/TileWMS';
 import '../PluggableMap';
-import {createElement,createDiv,createSpan,createA,createI,createImg,createInput,createInputRange,} from '../ui/UI';
+import {
+    createElement,
+    createDiv,
+    createSpan,
+    createA,
+    createI,
+    createImg,
+    createInput,
+    createInputRange,
+} from '../ui/UI';
 
 /**
  * @classdesc
@@ -57,13 +66,13 @@ class TimeDimensionTile extends LayerGroup {
                     // await this.collectDateAndTime();
                     index = index + 1;
                 }
-                await Promise.all(AllPromiseList).then((results) => {
-                    //pass
-                }).catch((error) => {
-                    console.log(error);
-                });
+                // await Promise.all(AllPromiseList).then((results) => {
+                //     //pass
+                // }).catch((error) => {
+                //     console.log(error);
+                // });
+                this.PromiseAllTDL(AllPromiseList);
                 this.AllDateAndTimeList.sort((a, b) => (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0));
-
             } else {
                 await this.collectDateAndTime(this.param.source.url, 0);
             }
@@ -76,11 +85,13 @@ class TimeDimensionTile extends LayerGroup {
                     index = index + 1;
                 }
 
-                await Promise.all(AllPromiseList).then((results) => {
-                    //pass
-                }).catch((error) => {
-                    console.log(error);
-                });
+                // await Promise.all(AllPromiseList).then((results) => {
+                //     //pass
+                // }).catch((error) => {
+                //     console.log(error);
+                // });
+
+                this.PromiseAllTDL(AllPromiseList);
                 this.AllDateAndTimeList.sort((a, b) => (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0));
 
             } else {
@@ -450,7 +461,7 @@ class TimeDimensionTile extends LayerGroup {
         this.fpsDiv.style.width = "122px";
         this.fpsSpan = createSpan("speed");
         this.fpsSpan.innerText = "1fps"
-        this.fpsInput = createInputRange("thredds-range thredds-data-server-slider-pic-range-fps", 1, 6, 1,1);
+        this.fpsInput = createInputRange("thredds-range thredds-data-server-slider-pic-range-fps", 1, 6, 1, 1);
         this.fpsDiv.append(this.fpsSpan);
         this.fpsDiv.append(this.fpsInput);
 
@@ -673,7 +684,7 @@ class TimeDimensionTile extends LayerGroup {
         this.animationDownloadSpan.addEventListener('click', async () => {
             // let CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
             if (this.isFunction(this.param.animationGIFFunction)) {
-                this.param.animationGIFFunction.call(this);
+                this.param.animationGIFFunction.call(undefined, this);
             }
 
             // if (!CheckDisable) {
@@ -998,6 +1009,19 @@ class TimeDimensionTile extends LayerGroup {
     //         };
     //     }
     // }
+
+    /**
+     *
+     * @param {*} o
+     * @returns {Array}
+     */
+    PromiseAllTDL(apl) {
+        return Promise.all(apl).then((results) => {
+            //pass
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
 
 }

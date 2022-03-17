@@ -103,8 +103,8 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                         else {
                             this.opacity = 1;
                         }
-                        if (!(this.param.ThreddsDataServerVersion == 5)) return [3 /*break*/, 5];
-                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 2];
+                        if (!(this.param.ThreddsDataServerVersion == 5)) return [3 /*break*/, 4];
+                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 1];
                         AllPromiseList = [];
                         index = 0;
                         for (_i = 0, _a = this.param.source.url; _i < _a.length; _i++) {
@@ -113,23 +113,22 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                             // await this.collectDateAndTime();
                             index = index + 1;
                         }
-                        return [4 /*yield*/, Promise.all(AllPromiseList).then(function (results) {
-                                //pass
-                            }).catch(function (error) {
-                                console.log(error);
-                            })];
-                    case 1:
-                        _d.sent();
+                        // await Promise.all(AllPromiseList).then((results) => {
+                        //     //pass
+                        // }).catch((error) => {
+                        //     console.log(error);
+                        // });
+                        this.PromiseAllTDL(AllPromiseList);
                         this.AllDateAndTimeList.sort(function (a, b) { return (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0); });
-                        return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, this.collectDateAndTime(this.param.source.url, 0)];
-                    case 3:
+                        return [3 /*break*/, 3];
+                    case 1: return [4 /*yield*/, this.collectDateAndTime(this.param.source.url, 0)];
+                    case 2:
                         _d.sent();
-                        _d.label = 4;
-                    case 4: return [3 /*break*/, 11];
-                    case 5:
-                        if (!(this.param.ThreddsDataServerVersion == 4)) return [3 /*break*/, 10];
-                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 7];
+                        _d.label = 3;
+                    case 3: return [3 /*break*/, 9];
+                    case 4:
+                        if (!(this.param.ThreddsDataServerVersion == 4)) return [3 /*break*/, 8];
+                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 5];
                         AllPromiseList = [];
                         index = 0;
                         for (_b = 0, _c = this.param.source.url; _b < _c.length; _b++) {
@@ -137,24 +136,23 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                             AllPromiseList.push(this.loadMultipleDateTime(this.param.source.url[index], index, this.collectDateAndTimeThredd4));
                             index = index + 1;
                         }
-                        return [4 /*yield*/, Promise.all(AllPromiseList).then(function (results) {
-                                //pass
-                            }).catch(function (error) {
-                                console.log(error);
-                            })];
+                        // await Promise.all(AllPromiseList).then((results) => {
+                        //     //pass
+                        // }).catch((error) => {
+                        //     console.log(error);
+                        // });
+                        this.PromiseAllTDL(AllPromiseList);
+                        this.AllDateAndTimeList.sort(function (a, b) { return (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0); });
+                        return [3 /*break*/, 7];
+                    case 5: return [4 /*yield*/, this.collectDateAndTimeThredd4(this.param.source.url, 0)];
                     case 6:
                         _d.sent();
-                        this.AllDateAndTimeList.sort(function (a, b) { return (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0); });
-                        return [3 /*break*/, 9];
-                    case 7: return [4 /*yield*/, this.collectDateAndTimeThredd4(this.param.source.url, 0)];
+                        _d.label = 7;
+                    case 7: return [3 /*break*/, 9];
                     case 8:
-                        _d.sent();
-                        _d.label = 9;
-                    case 9: return [3 /*break*/, 11];
-                    case 10:
                         console.error("Please Provide Properties with key \"ThreddsDataServerVersion\", value should be 5 for TDS version 5 and 4 for TDS version 4");
-                        _d.label = 11;
-                    case 11:
+                        _d.label = 9;
+                    case 9:
                         this.createLayers();
                         this.layerVisibilityInitiliazation();
                         // this.addLayerPrototypeOfMap();
@@ -777,7 +775,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 // let CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
                 if (this.isFunction(this.param.animationGIFFunction)) {
-                    this.param.animationGIFFunction.call(this);
+                    this.param.animationGIFFunction.call(undefined, this);
                 }
                 return [2 /*return*/];
             });
@@ -1038,6 +1036,27 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         return Function.prototype.isPrototypeOf(o);
     };
     ;
+    // addLayerPrototypeOfMap() {
+    //     if (!PluggableMap.prototype.addThreddsLayer) {
+    //         PluggableMap.prototype.addThreddsLayer = function (LayerList) {
+    //             for (let l of LayerList) {
+    //                 this.addLayer(l);
+    //             }
+    //         };
+    //     }
+    // }
+    /**
+     *
+     * @param {*} o
+     * @returns {Array}
+     */
+    TimeDimensionTile.prototype.PromiseAllTDL = function (apl) {
+        return Promise.all(apl).then(function (results) {
+            //pass
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
     return TimeDimensionTile;
 }(LayerGroup));
 export default TimeDimensionTile;
