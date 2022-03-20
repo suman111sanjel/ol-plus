@@ -455,10 +455,10 @@ var TimeDimensionTile = /** @class */ (function (_super) {
      */
     TimeDimensionTile.prototype.legendUIInitilization = function () {
         this.timeLayerLedgendDiv = document.querySelector('div.time-layer-ledgend-div');
-        var olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
+        // let olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
         if (!this.timeLayerLedgendDiv) {
             this.timeLayerLedgendDiv = createDiv('time-layer-ledgend-div custom-thredd-Scroll');
-            olOverlaycontainer.append(this.timeLayerLedgendDiv);
+            // olOverlaycontainer.append(this.timeLayerLedgendDiv);
         }
         this.imageContainer = createDiv("thredd-layer-image-div");
         var imageNode = createImg();
@@ -472,7 +472,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
      */
     TimeDimensionTile.prototype.UIinitilization = function () {
         this.timeSliderDiv = document.querySelector('div.timeSliderDiv');
-        var olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
+        // let olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
         if (!this.timeSliderDiv) {
             this.timeSliderDiv = createDiv('timeSliderDiv custom-thredd-Scroll');
             // this.timeSliderDiv.style.width = this.ParentDivWidth.toString() + "px";
@@ -490,7 +490,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
             else {
                 // this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
             }
-            olOverlaycontainer.append(this.timeSliderDiv);
+            // olOverlaycontainer.append(this.timeSliderDiv);
         }
         var ui = this.completeUI();
         this.timeSliderDiv.append(ui);

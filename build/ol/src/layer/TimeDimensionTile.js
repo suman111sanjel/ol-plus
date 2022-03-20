@@ -84,13 +84,11 @@ class TimeDimensionTile extends LayerGroup {
                     AllPromiseList.push(this.loadMultipleDateTime(this.param.source.url[index], index, this.collectDateAndTimeThredd4));
                     index = index + 1;
                 }
-
                 // await Promise.all(AllPromiseList).then((results) => {
                 //     //pass
                 // }).catch((error) => {
                 //     console.log(error);
                 // });
-
                 await this.PromiseAllTDL(AllPromiseList);
                 this.AllDateAndTimeList.sort((a, b) => (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0));
 
@@ -346,13 +344,13 @@ class TimeDimensionTile extends LayerGroup {
      */
     legendUIInitilization() {
         this.timeLayerLedgendDiv = document.querySelector('div.time-layer-ledgend-div');
-        let olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
+        // let olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
         if (!this.timeLayerLedgendDiv) {
             this.timeLayerLedgendDiv = createDiv('time-layer-ledgend-div custom-thredd-Scroll');
-            olOverlaycontainer.append(this.timeLayerLedgendDiv);
+            // olOverlaycontainer.append(this.timeLayerLedgendDiv);
         }
         this.imageContainer = createDiv("thredd-layer-image-div");
-        let imageNode = createImg()
+        let imageNode = createImg();
         imageNode.setAttribute("src", this.param.legendPath);
         this.imageContainer.append(imageNode);
         this.timeLayerLedgendDiv.append(this.imageContainer);
@@ -363,7 +361,7 @@ class TimeDimensionTile extends LayerGroup {
      */
     UIinitilization() {
         this.timeSliderDiv = document.querySelector('div.timeSliderDiv');
-        let olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
+        // let olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
         if (!this.timeSliderDiv) {
             this.timeSliderDiv = createDiv('timeSliderDiv custom-thredd-Scroll');
             // this.timeSliderDiv.style.width = this.ParentDivWidth.toString() + "px";
@@ -379,7 +377,7 @@ class TimeDimensionTile extends LayerGroup {
             } else {
                 // this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
             }
-            olOverlaycontainer.append(this.timeSliderDiv);
+            // olOverlaycontainer.append(this.timeSliderDiv);
         }
         let ui = this.completeUI();
         this.timeSliderDiv.append(ui);
