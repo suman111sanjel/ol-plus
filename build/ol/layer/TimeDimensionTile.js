@@ -103,8 +103,8 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                         else {
                             this.opacity = 1;
                         }
-                        if (!(this.param.ThreddsDataServerVersion == 5)) return [3 /*break*/, 4];
-                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 1];
+                        if (!(this.param.ThreddsDataServerVersion == 5)) return [3 /*break*/, 5];
+                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 2];
                         AllPromiseList = [];
                         index = 0;
                         for (_i = 0, _a = this.param.source.url; _i < _a.length; _i++) {
@@ -118,17 +118,24 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                         // }).catch((error) => {
                         //     console.log(error);
                         // });
-                        this.PromiseAllTDL(AllPromiseList);
-                        this.AllDateAndTimeList.sort(function (a, b) { return (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0); });
-                        return [3 /*break*/, 3];
-                    case 1: return [4 /*yield*/, this.collectDateAndTime(this.param.source.url, 0)];
-                    case 2:
+                        return [4 /*yield*/, this.PromiseAllTDL(AllPromiseList)];
+                    case 1:
+                        // await Promise.all(AllPromiseList).then((results) => {
+                        //     //pass
+                        // }).catch((error) => {
+                        //     console.log(error);
+                        // });
                         _d.sent();
-                        _d.label = 3;
-                    case 3: return [3 /*break*/, 9];
-                    case 4:
-                        if (!(this.param.ThreddsDataServerVersion == 4)) return [3 /*break*/, 8];
-                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 5];
+                        this.AllDateAndTimeList.sort(function (a, b) { return (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0); });
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, this.collectDateAndTime(this.param.source.url, 0)];
+                    case 3:
+                        _d.sent();
+                        _d.label = 4;
+                    case 4: return [3 /*break*/, 11];
+                    case 5:
+                        if (!(this.param.ThreddsDataServerVersion == 4)) return [3 /*break*/, 10];
+                        if (!Array.isArray(this.param.source.url)) return [3 /*break*/, 7];
                         AllPromiseList = [];
                         index = 0;
                         for (_b = 0, _c = this.param.source.url; _b < _c.length; _b++) {
@@ -141,18 +148,25 @@ var TimeDimensionTile = /** @class */ (function (_super) {
                         // }).catch((error) => {
                         //     console.log(error);
                         // });
-                        this.PromiseAllTDL(AllPromiseList);
-                        this.AllDateAndTimeList.sort(function (a, b) { return (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0); });
-                        return [3 /*break*/, 7];
-                    case 5: return [4 /*yield*/, this.collectDateAndTimeThredd4(this.param.source.url, 0)];
+                        return [4 /*yield*/, this.PromiseAllTDL(AllPromiseList)];
                     case 6:
+                        // await Promise.all(AllPromiseList).then((results) => {
+                        //     //pass
+                        // }).catch((error) => {
+                        //     console.log(error);
+                        // });
                         _d.sent();
-                        _d.label = 7;
-                    case 7: return [3 /*break*/, 9];
+                        this.AllDateAndTimeList.sort(function (a, b) { return (a.dateisoFormat > b.dateisoFormat) ? 1 : ((b.dateisoFormat > a.dateisoFormat) ? -1 : 0); });
+                        return [3 /*break*/, 9];
+                    case 7: return [4 /*yield*/, this.collectDateAndTimeThredd4(this.param.source.url, 0)];
                     case 8:
-                        console.error("Please Provide Properties with key \"ThreddsDataServerVersion\", value should be 5 for TDS version 5 and 4 for TDS version 4");
+                        _d.sent();
                         _d.label = 9;
-                    case 9:
+                    case 9: return [3 /*break*/, 11];
+                    case 10:
+                        console.error("Please Provide Properties with key \"ThreddsDataServerVersion\", value should be 5 for TDS version 5 and 4 for TDS version 4");
+                        _d.label = 11;
+                    case 11:
                         this.createLayers();
                         this.layerVisibilityInitiliazation();
                         // this.addLayerPrototypeOfMap();

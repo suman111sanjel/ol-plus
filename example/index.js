@@ -1,6 +1,7 @@
 import 'ol/ol.css';
 import './main.css';
 import Map from 'ol/Map';
+import '../src/ol/PluggableMap';
 import OSM from 'ol/source/OSM';
 import TileLayer from 'ol/layer/Tile';
 import TileWMS from 'ol/source/TileWMS';
@@ -9,8 +10,7 @@ import TimeDimensionTile from "../src/ol/layer/TimeDimensionTile";
 import {transform as ol_proj_transform, transformExtent} from "ol/proj";
 import {getCenter} from "ol/extent";
 import EDALSLD from "../src/ol/sld/EDALSLD";
-import LayerSwitcher from '../src/ol/ui/LayerSwitcher'
-
+import LayerSwitcher from '../src/ol/ui/LayerSwitcher';
 
 async function initMap() {
     var extent = transformExtent([60, 0, 100, 60], 'EPSG:4326', 'EPSG:3857');
@@ -142,9 +142,9 @@ async function initMap() {
 
     });
 
-    await kk.init().then((val) => {
+    await kk.init().then(() => {
             let l1 = new LayerSwitcher(".layerCollection", kk, true, true, 'withOpacSlider', true);
-            map.addThreddsLayer(val);
+            map.addThreddsLayer(kk);
             console.log('t1');
         },
         (error) => console.error(error));
@@ -181,9 +181,9 @@ async function initMap() {
         },
     });
 
-    await jj.init().then((val) => {
+    await jj.init().then(() => {
             let l1 = new LayerSwitcher(".layerCollection", jj, true, true, 'withOpacSlider', true);
-            map.addThreddsLayer(val);
+            map.addThreddsLayer(jj);
             console.log('t2');
         },
         (error) => console.error(error));
@@ -254,7 +254,7 @@ async function initMap() {
             }
         ,
         "legendPath":
-            "http://localhost:8000/apps/airqualitynp/WMSProxy/http://smog.icimod.org:8080/thredds/wms/HKHAirQualityWatch/RecentAndArchive/PM/GEOS-PM2p5/Geos-PM2p5-2022-03-16-00-30.nc?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&WIDTH=10&HEIGHT=230&LAYERS=PM2p5&COLORSCALERANGE=0,100&STYLES=default-scalar/x-Rainbow",
+            "http://smog.icimod.org:8080/thredds/wms/HKHAirQualityWatch/RecentAndArchive/PM/GEOS-PM2p5/Geos-PM2p5-2022-03-16-00-30.nc?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&WIDTH=10&HEIGHT=230&LAYERS=PM2p5&COLORSCALERANGE=0,100&STYLES=default-scalar/x-Rainbow",
         "wmsList":
             ["http://smog.icimod.org:8080/thredds/wms/HKHAirQualityWatch/RecentAndArchive/PM/GEOS-PM2p5/Geos-PM2p5-2022-03-16-00-30.nc", "http://smog.icimod.org:8080/thredds/wms/HKHAirQualityWatch/RecentAndArchive/PM/GEOS-PM2p5/Geos-PM2p5-2022-03-16-06-30.nc"]
     }
@@ -264,14 +264,12 @@ async function initMap() {
 
 
     var jjlk = new TimeDimensionTile(threddsLayerProp);
-
-    await jjlk.init().then((val) => {
+    await jjlk.init().then(() => {
             let l1 = new LayerSwitcher(".layerCollection", jjlk, true, true, 'withOpacSlider', true);
-            map.addThreddsLayer(val);
+            map.addThreddsLayer(jjlk);
             console.log('t2');
         },
         (error) => console.error(error));
-
 
 }
 
@@ -280,7 +278,7 @@ function timeout(ms) {
 }
 
 async function sleep(fn) {
-    await timeout(5000);
+    // await timeout(5000);
     return fn();
 }
 
