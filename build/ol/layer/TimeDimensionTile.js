@@ -457,7 +457,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         this.timeLayerLedgendDiv = document.querySelector('div.time-layer-ledgend-div');
         // let olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
         if (!this.timeLayerLedgendDiv) {
-            this.timeLayerLedgendDiv = createDiv('time-layer-ledgend-div custom-thredd-Scroll');
+            this.timeLayerLedgendDiv = createDiv('time-layer-ledgend-div custom-thredd-Scroll ol-control');
             // olOverlaycontainer.append(this.timeLayerLedgendDiv);
         }
         this.imageContainer = createDiv("thredd-layer-image-div");
@@ -474,7 +474,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         this.timeSliderDiv = document.querySelector('div.timeSliderDiv');
         // let olOverlaycontainer = document.querySelector('div.ol-overlaycontainer-stopevent');
         if (!this.timeSliderDiv) {
-            this.timeSliderDiv = createDiv('timeSliderDiv custom-thredd-Scroll');
+            this.timeSliderDiv = createDiv('timeSliderDiv custom-thredd-Scroll ol-control');
             // this.timeSliderDiv.style.width = this.ParentDivWidth.toString() + "px";
             if (this.param.alignTimeSlider === "left") {
                 this.timeSliderDiv.style.left = "10px";

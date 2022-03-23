@@ -271,6 +271,13 @@ async function initMap() {
         },
         (error) => console.error(error));
 
+    jjlk.on('change:visible', function () {
+        console.log('change:visible');
+    });
+
+    jjlk.on('change', function () {
+        console.log('change');
+    });
 }
 
 function timeout(ms) {
