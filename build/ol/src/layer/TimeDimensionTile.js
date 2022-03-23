@@ -3,6 +3,8 @@
  */
 // import ol_ext_inherits from '../util/ext'
 import LayerGroup from 'ol/layer/Group.js';
+import Collection from 'ol/Collection';
+
 import '../iso8601';
 
 import './threddsDataserver.css';
@@ -33,10 +35,12 @@ class TimeDimensionTile extends LayerGroup {
      * @param {Object} params
      */
     constructor(params) {
-        super();
+        params.layers = [];
+        super(params);
         this.param = params;
         this.opacity = '';
-        this.AllLayersList = [];
+        this.AllLayersList = params.layers;
+        // this.AllLayersList = [];
         this.AllDateAndTimeList = [];
         this.loading = 0;
         this.loaded = 0;
@@ -786,6 +790,7 @@ class TimeDimensionTile extends LayerGroup {
      * @param {*} visibleorNot
      */
     setVisible(visibleorNot) {
+        super.setVisible(visibleorNot);
         let currentLayer = this.AllLayersList.filter(x => x.getProperties().id === this.currentLayerId)[0];
         currentLayer.setVisible(visibleorNot);
         this.param.visible = visibleorNot;

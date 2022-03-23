@@ -272,6 +272,12 @@ async function initMap() {
         (error) => console.error(error));
 
     jjlk.on('change:visible', function () {
+        console.log(this.getProperties());
+        if(this.getProperties().visible){
+            console.log('true');
+        }else{
+             console.log('false');
+        }
         console.log('change:visible');
     });
 

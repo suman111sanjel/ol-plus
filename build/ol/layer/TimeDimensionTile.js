@@ -73,10 +73,13 @@ var TimeDimensionTile = /** @class */ (function (_super) {
      * @param {Object} params
      */
     function TimeDimensionTile(params) {
-        var _this = _super.call(this) || this;
+        var _this = this;
+        params.layers = [];
+        _this = _super.call(this, params) || this;
         _this.param = params;
         _this.opacity = '';
-        _this.AllLayersList = [];
+        _this.AllLayersList = params.layers;
+        // this.AllLayersList = [];
         _this.AllDateAndTimeList = [];
         _this.loading = 0;
         _this.loaded = 0;
@@ -830,6 +833,7 @@ var TimeDimensionTile = /** @class */ (function (_super) {
      */
     TimeDimensionTile.prototype.setVisible = function (visibleorNot) {
         var _this = this;
+        _super.prototype.setVisible.call(this, visibleorNot);
         var currentLayer = this.AllLayersList.filter(function (x) { return x.getProperties().id === _this.currentLayerId; })[0];
         currentLayer.setVisible(visibleorNot);
         this.param.visible = visibleorNot;
