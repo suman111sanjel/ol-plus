@@ -375,6 +375,7 @@ class TimeDimensionTile extends LayerGroup {
             } else if (this.param.alignTimeSlider === "right") {
                 this.timeSliderDiv.style.right = "10px";
                 this.timeSliderDiv.style.transform = "translateX(0%)";
+                this.timeSliderDiv.style.left = "unset";
             } else if (this.param.alignTimeSlider === "center") {
 
                 // this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
