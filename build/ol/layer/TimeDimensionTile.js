@@ -833,10 +833,10 @@ var TimeDimensionTile = /** @class */ (function (_super) {
      */
     TimeDimensionTile.prototype.setVisible = function (visibleorNot) {
         var _this = this;
-        _super.prototype.setVisible.call(this, visibleorNot);
         var currentLayer = this.AllLayersList.filter(function (x) { return x.getProperties().id === _this.currentLayerId; })[0];
         currentLayer.setVisible(visibleorNot);
         this.param.visible = visibleorNot;
+        _super.prototype.setVisible.call(this, visibleorNot);
         if (visibleorNot === true) {
             this.container.style.display = 'flex';
             if (this.param.showlegend === true) {

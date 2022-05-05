@@ -790,10 +790,10 @@ class TimeDimensionTile extends LayerGroup {
      * @param {*} visibleorNot
      */
     setVisible(visibleorNot) {
-        super.setVisible(visibleorNot);
         let currentLayer = this.AllLayersList.filter(x => x.getProperties().id === this.currentLayerId)[0];
         currentLayer.setVisible(visibleorNot);
         this.param.visible = visibleorNot;
+        super.setVisible(visibleorNot);
 
         if (visibleorNot === true) {
             this.container.style.display = 'flex';
