@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<StyledLayerDescriptor version="1.1.0" xsi:schemaLocation="http://www.opengis.net/sldStyledLayerDescriptor.xsd"
+                       xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/ogc"
+                       xmlns:se="http://www.opengis.net/se" xmlns:xlink="http://www.w3.org/1999/xlink"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <NamedLayer>
+        <se:Name>Tair_f_tavg</se:Name>
+        <UserStyle>
+            <se:Name>Thesholded colour scheme</se:Name>
+            <se:CoverageStyle>
+                <se:Rule>
+                    <se:RasterSymbolizer>
+                        <se:Opacity>1.0</se:Opacity>
+                        <se:ColorMap>
+                            <se:Categorize fallbackValue="#00000000">
+                                <se:LookupValue>Rasterdata</se:LookupValue>
+                                <se:Value>#0c2c84</se:Value>
+                                <se:Threshold>273</se:Threshold>
+                                <se:Value>#1d91c0</se:Value>
+                                <se:Threshold>278</se:Threshold>
+                                <se:Value>#7fcdbb</se:Value>
+                                <se:Threshold>283</se:Threshold>
+                                <se:Value>#c7e9b4</se:Value>
+                                <se:Threshold>288</se:Threshold>
+                                <se:Value>#ffeda0</se:Value>
+                                <se:Threshold>293</se:Threshold>
+                                <se:Value>#fc4e2a</se:Value>
+                                <se:Threshold>298</se:Threshold>
+                                <se:Value>#fc4e2a</se:Value>
+                                <se:Threshold>303</se:Threshold>
+                                <se:Value>#b10026</se:Value>
+                            </se:Categorize>
+                        </se:ColorMap>
+                    </se:RasterSymbolizer>
+                </se:Rule>
+            </se:CoverageStyle>
+        </UserStyle>
+    </NamedLayer>
+</StyledLayerDescriptor>

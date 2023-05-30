@@ -446,11 +446,19 @@ class TimeDimensionTile extends LayerGroup {
 
         // Date-Time
         this.aTime = createA('thredds-data-server-data-time timecontrol-date');
-        this.aTime.innerText = this.AllDateAndTimeList[0].dateisoFormatForLevel;
+
+        if (this.param.defaultTimeZone == 'local') {
+            this.aTime.innerText = this.AllDateAndTimeList[0].localDateTime;
+            this.aTime.setAttribute("format", "local");
+        } else {
+            this.aTime.innerText = this.AllDateAndTimeList[0].dateisoFormatForLevel;
+            this.aTime.setAttribute("format", "ISO");
+        }
+
+
         this.aTime.style.backgroundColor = "#fff";
         this.aTime.setAttribute("href", "javascript:void(0)");
         this.aTime.setAttribute("title", "Date");
-        this.aTime.setAttribute("format", "ISO");
 
         // slider
         this.sliderDiv = createDiv('thredds-data-server-control-rangecontrol');
