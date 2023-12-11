@@ -9,8 +9,8 @@ body {
 }
 
 .map {
-    width: 70%;
-    height: 100%;
+    width: 100%;
+    height: 80%;
     display: inline-block;
 }
 
@@ -67,3 +67,4 @@ body {
 /*.ol-search.ol-unselectable {*/
 /*    background-color: rgb(255, 255, 255)!important;*/
 /*}*/
+
