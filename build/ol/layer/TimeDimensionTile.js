@@ -798,8 +798,8 @@ var TimeDimensionTile = /** @class */ (function (_super) {
         this.animationDownloadSpan.addEventListener('click', function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 // let CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
-                if (this.isFunction(this.param.animationGIFFunction)) {
-                    this.param.animationGIFFunction.call(undefined, this);
+                if (this.isFunction(this.param.animationDownloadFunction)) {
+                    this.param.animationDownloadFunction.call(undefined, this);
                 }
                 return [2 /*return*/];
             });
@@ -856,6 +856,9 @@ var TimeDimensionTile = /** @class */ (function (_super) {
             if (this.param.showControlPanel === false) {
                 this.container.style.display = 'none';
             }
+            else {
+                this.container.style.display = 'block';
+            }
         }
         else {
             this.container.style.display = 'none';
@@ -869,32 +872,34 @@ var TimeDimensionTile = /** @class */ (function (_super) {
             clearInterval(this.interValFun);
             this.t0 = 0;
         }
-        //slider pannel
-        var parentElement = this.container.parentElement;
-        var allChildrenelement = parentElement.children;
-        var blockCount = 0;
-        for (var _i = 0, allChildrenelement_1 = allChildrenelement; _i < allChildrenelement_1.length; _i++) {
-            var el = allChildrenelement_1[_i];
-            if (getComputedStyle(el)["display"] === "flex") {
-                blockCount += 1;
-            }
-        }
-        if (blockCount === 0) {
-            this.container.parentElement.style.display = 'none';
-        }
-        else {
-            this.container.parentElement.style.display = 'flex';
-        }
+        // //slider pannel
+        // let parentElement = this.container.parentElement
+        // let allChildrenelement = parentElement.children
+        // let blockCount = 0;
+        // for (let el of allChildrenelement) {
+        //     if (getComputedStyle(el)["display"] === "block") {
+        //         blockCount += 1;
+        //     }
+        // }
+        // if (blockCount === 0) {
+        //     this.container.parentElement.style.display = 'none';
+        // } else {
+        //     this.container.parentElement.style.display = 'block';
+        // }
         //slider pannel
         var parentImageContainerElement = this.imageContainer.parentElement;
         var allChildrenImageContainerelement = parentImageContainerElement.children;
         var ImageblockCount = 0;
-        for (var _a = 0, allChildrenImageContainerelement_1 = allChildrenImageContainerelement; _a < allChildrenImageContainerelement_1.length; _a++) {
-            var el = allChildrenImageContainerelement_1[_a];
+        for (var _i = 0, allChildrenImageContainerelement_1 = allChildrenImageContainerelement; _i < allChildrenImageContainerelement_1.length; _i++) {
+            var el = allChildrenImageContainerelement_1[_i];
+            // console.log(JSON.stringify(getComputedStyle(el)));
             if (getComputedStyle(el)["display"] === "block") {
                 ImageblockCount += 1;
             }
         }
+        console.log(ImageblockCount);
+        console.log(allChildrenImageContainerelement);
+        console.log('ImageblockCount');
         if (ImageblockCount === 0) {
             this.imageContainer.parentElement.style.display = 'none';
         }
@@ -967,6 +972,19 @@ var TimeDimensionTile = /** @class */ (function (_super) {
     ;
     /**
      *
+     * @param {*} bolObj
+     */
+    TimeDimensionTile.prototype.setIsProcessing = function (bolObj) {
+        if (bolObj === true) {
+            this.animationDownloadSpan.setAttribute('data-disabled', 1);
+        }
+        else {
+            this.animationDownloadSpan.setAttribute('data-disabled', 0);
+        }
+    };
+    ;
+    /**
+     *
      * @param {*} layer
      * @param {*} Coods
      * @param {*} ArrayIndex
@@ -1033,6 +1051,20 @@ var TimeDimensionTile = /** @class */ (function (_super) {
     ;
     TimeDimensionTile.prototype.getAllDateAndTimeList = function () {
         return this.AllDateAndTimeList;
+    };
+    ;
+    /**
+     *
+     * @param {*} bolObj
+     */
+    TimeDimensionTile.prototype.getIsProcessing = function () {
+        var CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
+        if (CheckDisable) {
+            return true;
+        }
+        else {
+            return false;
+        }
     };
     ;
     /**

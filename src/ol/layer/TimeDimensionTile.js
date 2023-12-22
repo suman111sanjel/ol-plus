@@ -498,6 +498,7 @@ class TimeDimensionTile extends LayerGroup {
         this.btnGroup.append(this.fpsDiv);
         if (this.param.showAnimationButton === true) {
             this.btnGroup.append(this.animationDownloadSpan);
+            this.fpsDiv.classList.add('borderRightWithAnimation');
         }
         this.container.append(this.timeMapTitle);
         this.container.append(this.btnGroup);

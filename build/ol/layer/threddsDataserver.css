@@ -167,6 +167,7 @@ input[type=range].thredds-range:focus::-ms-fill-upper {
     display: flex;
     flex-direction: column;
     flex: 1;
+    background: white;
 }
 
 .thredds-data-server-enable-repeat, .thredds-data-server-enable-repeat:hover {

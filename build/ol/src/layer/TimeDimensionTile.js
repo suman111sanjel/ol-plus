@@ -379,10 +379,15 @@ class TimeDimensionTile extends LayerGroup {
             } else if (this.param.alignTimeSlider === "center") {
 
                 // this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
+
             } else {
+
                 // this.timeSliderDiv.style.left = 'calc(50% - ' + (this.ParentDivWidth / 2).toString() + 'px)';
+
             }
+
             // olOverlaycontainer.append(this.timeSliderDiv);
+
         }
         let ui = this.completeUI();
         this.timeSliderDiv.append(ui);
@@ -407,6 +412,7 @@ class TimeDimensionTile extends LayerGroup {
             // console.log(this.btnGroup.offsetWidth);
             // console.log(this.btnGroup.getBoundingClientRect());
         }
+
     };
 
     /**
@@ -693,9 +699,11 @@ class TimeDimensionTile extends LayerGroup {
             }
         };
         this.animationDownloadSpan.addEventListener('click', async () => {
+
             // let CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
-            if (this.isFunction(this.param.animationGIFFunction)) {
-                this.param.animationGIFFunction.call(undefined, this);
+
+            if (this.isFunction(this.param.animationDownloadFunction)) {
+                this.param.animationDownloadFunction.call(undefined, this);
             }
 
             // if (!CheckDisable) {
@@ -814,6 +822,8 @@ class TimeDimensionTile extends LayerGroup {
             ;
             if (this.param.showControlPanel === false) {
                 this.container.style.display = 'none';
+            } else {
+                this.container.style.display = 'block';
             }
         } else {
             this.container.style.display = 'none';
@@ -828,30 +838,36 @@ class TimeDimensionTile extends LayerGroup {
             this.t0 = 0
         }
 
-        //slider pannel
-        let parentElement = this.container.parentElement
-        let allChildrenelement = parentElement.children
-        let blockCount = 0;
-        for (let el of allChildrenelement) {
-            if (getComputedStyle(el)["display"] === "flex") {
-                blockCount += 1;
-            }
-        }
-        if (blockCount === 0) {
-            this.container.parentElement.style.display = 'none';
-        } else {
-            this.container.parentElement.style.display = 'flex';
-        }
+        // //slider pannel
+        // let parentElement = this.container.parentElement
+        // let allChildrenelement = parentElement.children
+        // let blockCount = 0;
+        // for (let el of allChildrenelement) {
+        //     if (getComputedStyle(el)["display"] === "block") {
+        //         blockCount += 1;
+        //     }
+        // }
+        // if (blockCount === 0) {
+        //     this.container.parentElement.style.display = 'none';
+        // } else {
+        //     this.container.parentElement.style.display = 'block';
+        // }
 
         //slider pannel
         let parentImageContainerElement = this.imageContainer.parentElement
         let allChildrenImageContainerelement = parentImageContainerElement.children
         let ImageblockCount = 0;
         for (let el of allChildrenImageContainerelement) {
+            // console.log(JSON.stringify(getComputedStyle(el)));
             if (getComputedStyle(el)["display"] === "block") {
                 ImageblockCount += 1;
             }
         }
+
+        console.log(ImageblockCount);
+        console.log(allChildrenImageContainerelement);
+        console.log('ImageblockCount');
+
         if (ImageblockCount === 0) {
             this.imageContainer.parentElement.style.display = 'none';
         } else {
@@ -914,6 +930,18 @@ class TimeDimensionTile extends LayerGroup {
                     this.changeMask(layer, Coods, 0, true, maskOrCrop);
                 }
             }
+        }
+    };
+
+    /**
+     *
+     * @param {*} bolObj
+     */
+    setIsProcessing(bolObj) {
+        if (bolObj === true) {
+            this.animationDownloadSpan.setAttribute('data-disabled', 1);
+        } else {
+            this.animationDownloadSpan.setAttribute('data-disabled', 0);
         }
     };
 
@@ -984,6 +1012,19 @@ class TimeDimensionTile extends LayerGroup {
 
     getAllDateAndTimeList() {
         return this.AllDateAndTimeList;
+    };
+
+    /**
+     *
+     * @param {*} bolObj
+     */
+    getIsProcessing() {
+        let CheckDisable = parseInt(this.animationDownloadSpan.getAttribute('data-disabled'));
+        if(CheckDisable){
+            return true;
+        }else{
+            return false;
+        }
     };
 
     /**

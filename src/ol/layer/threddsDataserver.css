@@ -494,3 +494,7 @@ a.timecontrol-date.loading, a.timecontrol-date.loading:hover {
 .thredds-data-server-control-rangecontrol .thredds-range{
 position: absolute;
 }
+
+.borderRightWithAnimation{
+    border-right: 0px;
+}
